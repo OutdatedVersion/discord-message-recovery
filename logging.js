@@ -19,33 +19,31 @@ const formattedLevels = {
 /**
  * @returns {String} The current date and time in a human readable format
  */
-const formattedDate = () =>
+function formattedDate()
 {
     return moment().format('MMM/D h:mm:ssa')
 }
 
-/**
- * A division of the logger that looks fairly decent
- */
+// create a stream that spits out nice lookin lines
 const pretty = pino.pretty({
     formatter: data => {
         return `${formattedLevels[data.level]} ${chalk.gray(formattedDate())} ${data.name}: ${data.msg}`
     }
 })
 
-// write the pretty lines to the console
+// send those lines out to the console
 pretty.pipe(process.stdout)
 
-/**
- * Primary logger
- */
+
+// create our primary logger
 const parent = pino({
-    name: 'Kratos'
+    name: 'Bot'
 }, pretty)
 
 
 module.exports = {
-    parent,
+    info: message => parent.info(message),
+    debug: message => parent.debug(message),
     child: name => {
         return parent.child({ name })
     }

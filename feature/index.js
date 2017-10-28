@@ -1,7 +1,11 @@
-class Feature
+const files = require('fs')
+const path = require('path')
+
+module.exports = (client, log) =>
 {
-    constructor(name)
-    {
-        this.name = name
-    }
+    log.info('Searching for features to load..')
+
+    files.readdirSync(path.join(__dirname, 'feature')).forEach(file => {
+        
+    })
 }
