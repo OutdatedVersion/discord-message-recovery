@@ -4,11 +4,22 @@
   "main": "index.js",
   "author": "Ben (OutdatedVersion)",
   "private": true,
+  "scripts": {
+    "dev": "nodemon -q -w src -x 'babel-node src/index.js'",
+    "build": "rm -rf dist && babel src -d dist",
+    "prod": "yarn run build && node dist/index.js"
+  },
   "dependencies": {
     "chalk": "^2.1.0",
+    "date-fns": "^1.29.0",
     "discord.js": "^11.2.1",
     "moment": "^2.19.1",
-    "mongoose": "^4.12.2",
+    "mongoose": "^4.13.5",
     "pino": "^4.7.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-remove-comments": "^2.0.0",
+    "babel-preset-env": "^1.6.1"
   }
 }

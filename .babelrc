@@ -1,0 +1,10 @@
+{
+    "plugins": [ "remove-comments" ],
+    "presets": [[
+        "env", {
+            "targets": {
+                "node": "current"
+            }
+        }
+    ]]
+}
