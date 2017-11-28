@@ -50,7 +50,7 @@ client.on('command', async (message, command, args) => {
             return `:white_small_square: ${date} ${result.from} said '${result.content}'`
         }).join('\n')
 
-        message.reply(`here are the previously ${length} removed message${limit > 1 ? 's' : ''} for you:\n${results}`)
+        message.reply(`here are the previously ${length} removed message${length > 1 ? 's' : ''} for you:\n${results}`)
         message.delete()
     }
 })
