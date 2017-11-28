@@ -65,7 +65,7 @@ client.on('messageDelete', async message => {
 
     const from = formatName(author)
 
-    const model = await new RemovedMessage({
+    await new RemovedMessage({
         content,
         from,
         sentIn: channel.id,
