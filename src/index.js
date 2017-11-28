@@ -1,9 +1,10 @@
 import Discord from 'discord.js'
 import log from './logging'
-import { token } from '../config'
+import { token, games } from '../config'
 import { RemovedMessage } from './data'
 import { distanceInWords } from 'date-fns'
 import commandHandler from './command'
+import { setInterval } from 'timers';
 
 
 const client = new Discord.Client()
@@ -11,7 +12,12 @@ const client = new Discord.Client()
 // setup command system
 commandHandler(client)
 
-client.on('ready', () => log.info(`Ready at ${client.user.tag}`))
+client.on('ready', () => {
+    setRandomGame()
+    log.info(`Ready at ${client.user.tag}`)
+
+    setInterval(setRandomGame, 600000) // every 10 mins
+})
 
 client.on('command', async (message, command, args) => {
     // switch to registration based system
@@ -80,4 +86,8 @@ client.login(token)
 
 function formatName(user) {
     return `${user.username}#${user.discriminator}`
+}
+
+function setRandomGame() {
+    client.user.setGame(games[Math.random() * games.length])
 }
