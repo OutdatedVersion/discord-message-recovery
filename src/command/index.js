@@ -4,8 +4,6 @@ import log from '../logging'
 import { command as config } from '../../config'
 import { setTimeout } from 'timers'
 
-console.log('one one onen oone one one one oncommoand')
-
 /**
  * Represenation of a message based command.
  */
@@ -48,38 +46,6 @@ export function hasCommand(executor)
         executor = executor.substring(config.prefix.length)
 
     return registeredCommands.has(executor)
-}
-
-/**
- * Begin parsing commands from messages.
- * 
- * @param {Client} client discord.js client
- */
-export function setupHandler(client)
-{
-    // todo(ben)
-    // register commands under 'src/command/'
-    // traverseDirectory(__dirname)
-
-    client.on('message', message => 
-    {
-        const split = message.content.split(' ')
-    
-        if (split && split[0].startsWith(config.prefix))
-        {
-            const command = registeredCommands.get(split[0].substring(1))
-            const timedReply = text => message.reply(text).then(msg => setTimeout(() => msg.delete(), 5000))
-
-            if (command)
-            {
-                message.timedReply = timedReply
-
-                command(message, split.splice(1))
-            }
-            else
-                timedReply('i have no command matching that..')
-        }
-    })
 }
 
 /**
