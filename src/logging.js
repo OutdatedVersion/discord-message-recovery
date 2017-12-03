@@ -1,6 +1,6 @@
-const pino = require('pino')
-const chalk = require('chalk')
-const moment = require('moment')
+import pino from 'pino'
+import chalk from 'chalk'
+import moment from 'moment'
 
 
 /**
@@ -19,15 +19,14 @@ const formattedLevels = {
 /**
  * @returns {String} The current date and time in a human readable format
  */
-function formattedDate()
-{
+function formattedDate() {
     return moment().format('MMM/D h:mm:ssa')
 }
 
 // create a stream that spits out nice lookin lines
 const pretty = pino.pretty({
     formatter: data => {
-        return `${formattedLevels[data.level]} ${chalk.gray(formattedDate())} ${data.name}: ${data.msg}`
+        return `${formattedLevels[data.level]} ${chalk.gray(formattedDate())} ${chalk.magenta(data.name)} ${chalk.white('::')} ${data.msg}`
     }
 })
 
@@ -44,7 +43,7 @@ const parent = pino({
 module.exports = {
     info: message => parent.info(message),
     debug: message => parent.debug(message),
-    child: name => {
-        return parent.child({ name })
-    }
+    error: message => parent.error(message),
+    child: name => parent.child({ name }),
+    chalk
 }
