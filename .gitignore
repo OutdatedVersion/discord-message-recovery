@@ -1,2 +1,8 @@
+# editor
+.vscode
+
 # node
 node_modules
+
+# project
+dist
