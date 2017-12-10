@@ -2,6 +2,7 @@ import Files from 'fs'
 import Path from 'path'
 import log from '../logging'
 import { command as config } from '../../config'
+import { traverseDirectory } from '../utility/folder'
 import { setTimeout } from 'timers'
 
 /**
@@ -57,7 +58,7 @@ export function setupHandler(client)
 {
     // todo(ben)
     // register commands under 'src/command/'
-    // traverseDirectory(__dirname)
+    traverseDirectory(__dirname, registerCommand)
 
     client.on('message', message =>
     {
@@ -77,26 +78,4 @@ export function setupHandler(client)
             else timedReply('i have no command matching that..')
         }
     })
-}
-
-/**
- * Take the provided export in a file, and extract the commands out of it.
- * 
- * @param {object} entry The export entry
- */
-function parseDefintion(entry)
-{
-    if (!entry.default)
-    {
-        for (let key in entry)
-            parseDefintion({ default: entry[key] })
-
-        return
-    }
-    else entry = entry.default
-    
-    if (!entry)
-        throw new Error('Missing command definition')
-
-    registerCommand(entry.executor, entry.handler)
 }

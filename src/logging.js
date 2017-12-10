@@ -44,6 +44,8 @@ module.exports = {
     info: message => parent.info(message),
     debug: message => parent.debug(message),
     error: message => parent.error(message),
+    warn: message => parent.warn(message),
     child: name => parent.child({ name }),
+    level: level => parent.level = level,
     chalk
 }

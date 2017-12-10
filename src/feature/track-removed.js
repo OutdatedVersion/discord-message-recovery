@@ -1,4 +1,5 @@
 import client from '../discord'
+import { formatName } from '../utility/user'
 import { RemovedMessage } from '../data'
 import { Command } from '../command'
 import { distanceInWords } from 'date-fns'
@@ -28,7 +29,6 @@ client.on('messageDelete', async message => {
 export const command = new Command(
     'deleted',
     async (message, args) => {
-        console.log('why')
         const limit = parseInt(args[0])
         
         if (!limit)
@@ -50,7 +50,7 @@ export const command = new Command(
             return `:white_small_square: ${date} ${result.from} said '${result.content}'`
         }).join('\n')
 
-        await message.reply(`here are the previously ${length} removed message${length > 1 ? 's' : ''} for you:\n${results}`)
+        await message.reply(`here are the **${length}** previously removed message${length > 1 ? 's' : ''} for you:\n${results}`)
         message.delete()
     }
 ) 

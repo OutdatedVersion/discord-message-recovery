@@ -10,6 +10,6 @@ export function traverseDirectory(path, parser)
 
         files.filter(file => file !== 'index.js')
              .map(file => require(Path.relative(__dirname, `${path}/${file}`)))
-             .forEach(modul => Object.keys(modul).forEach(key => parser(key, modul[key])))
+             .forEach(modul => Object.keys(modul).forEach(key => parser(modul[key], key)))
     })
 }

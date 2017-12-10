@@ -4,7 +4,7 @@ import log from '../logging'
 mongoose.connect('mongodb://localhost/kratos', { useMongoClient: true })
 mongoose.Promise = Promise
 
-process.on('cleanup', () => 
+process.on('cleanup', () =>
 {
     log.info('closing out database connection(s)')
     mongoose.disconnect()
