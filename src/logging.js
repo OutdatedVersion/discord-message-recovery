@@ -40,12 +40,9 @@ const parent = pino({
 }, pretty)
 
 
-module.exports = {
-    info: message => parent.info(message),
-    debug: message => parent.debug(message),
-    error: message => parent.error(message),
-    warn: message => parent.warn(message),
-    child: name => parent.child({ name }),
-    level: level => parent.level = level,
-    chalk
-}
+export default parent
+export const log = message => parent.info(message)
+export const debug = message => parent.debug(message)
+export const error = err => parent.error(err.message, err)
+export const createLogger = name => parent.child({ name })
+export const updateLoggingLevel = to => parent.level = to

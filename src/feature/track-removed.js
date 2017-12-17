@@ -1,16 +1,16 @@
 import client from '../discord'
+import log  from '../logging'
 import { formatName } from '../utility/user'
 import { RemovedMessage } from '../data'
-import { Command } from '../command'
+import { Command, hasCommand } from '../command'
 import { distanceInWords } from 'date-fns'
 
 
 client.on('messageDelete', async message => {
     const { content, channel, author } = message
 
-    // do not save messages from the bot
-    // todo(ben): verify that it is an actual command, so this isn't an exploit
-    if (author.id == client.user.id || content.startsWith('-'))
+    // do not save messages from the bot or command execution
+    if (author.id == client.user.id || hasCommand(content))
         return
 
     const from = formatName(author)

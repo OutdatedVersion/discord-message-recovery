@@ -10,7 +10,6 @@ export default new Command(
         const messages = await channel.fetchMessages({ limit })
         const deleted = await channel.bulkDelete(messages)
 
-        console.log(deleted)
         message.reply(`cleaned up ${limit} messages`)
     }
 )

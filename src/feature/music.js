@@ -1,6 +1,6 @@
 import { Command } from '../command'
 import log from '../logging'
-import YouTube from 'ytdl-core'
+// import YouTube from 'ytdl-core'
 import { setTimeout } from 'timers'
 
 export const command = new Command(
