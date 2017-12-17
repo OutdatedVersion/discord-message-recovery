@@ -3,7 +3,7 @@ import { bugsnag as token } from '../config'
 import log from './logging'
 
 // setup client
-bugsnag.register(token, { appVersion: '' })
+bugsnag.register(token)
 
 log.info('setup bugsnag reporting')
 
