@@ -29,13 +29,7 @@ client.on('messageDelete', async message => {
 export const command = new Command(
     'deleted',
     async (message, args) => {
-        const limit = parseInt(args[0])
-        
-        if (!limit)
-        {
-            message.reply('you missed the history count')
-            return
-        }
+        const limit = parseInt(args[0]) || 5
 
         let results = await RemovedMessage.find()
                                           .limit(limit)

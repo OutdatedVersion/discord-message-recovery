@@ -5,6 +5,13 @@ export default new Command(
     async (message, args) => 
     {
         const limit = parseInt(args[0])
+
+        if (!limit)
+        {
+            message.reply('you did not provide a limit...')
+            return
+        }
+
         const { channel } = message
 
         const messages = await channel.fetchMessages({ limit })
