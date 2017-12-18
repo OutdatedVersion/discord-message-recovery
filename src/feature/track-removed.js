@@ -29,8 +29,6 @@ client.on('messageDelete', async message => {
 export const command = new Command(
     'deleted',
     async (message, args) => {
-        console.log('test')
-        
         const limit = parseInt(args[0]) || 5
 
         let results = await RemovedMessage.find()
