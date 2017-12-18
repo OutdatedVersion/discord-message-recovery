@@ -69,7 +69,11 @@ export function setupHandler(client)
         {
             const executor = split[0].substring(1).toLowerCase()
             const command = registeredCommands.get(executor)
-            const timedReply = text => message.reply(text).then(msg => setTimeout(() => msg.delete(), 5000))
+            
+            const timedReply = text => message.reply(text).then(msg => setTimeout(() => {
+                msg.delete()
+                message.delete()
+            }, 5000))
 
             if (command)
             {
