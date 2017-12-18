@@ -32,7 +32,7 @@ export const command = new Command(
         const limit = parseInt(args[0]) || 5
 
         let results = await RemovedMessage.find()
-                                          .limit(limit)
+                                          .limit(limit > 25 ? 25 : limit)
                                           .sort('-at')
                                           .exec()
 
