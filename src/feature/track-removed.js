@@ -44,7 +44,7 @@ export const command = new Command(
             return `:white_small_square: ${date} ${result.from} said '${result.content}'`
         }).join('\n')
 
-        await message.reply(`here are the **${length}** previously removed message${length > 1 ? 's' : ''} for you:\n${results}`)
+        await message.reply(`here is the **${length}** previously removed message${length > 1 ? 's' : ''} for you:\n${results}`)
         message.delete()
     }
 ) 

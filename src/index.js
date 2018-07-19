@@ -1,5 +1,5 @@
 import client from './discord'
-import { updateLoggingLevel } from './logging'
+import log, { updateLoggingLevel } from './logging'
 import { token } from '../config'
 import { setupHandler } from './command'
 import { setup } from './feature'

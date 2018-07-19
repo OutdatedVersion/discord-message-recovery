@@ -5,11 +5,11 @@
   "author": "Ben (OutdatedVersion)",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon -q -w src -x 'babel-node src/index.js'",
+    "dev": "export NODE_ENV=dev nodemon -q -w src -x 'babel-node src/index.js'",
     "build": "babel src -d dist",
-    "prod": "yarn run build && node dist/index.js",
+    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node dist/index.js",
     "docker-build": "docker build -t outdatedversion/kratos .",
-    "docker-run": "docker run -d outdatedversion/kratos --name kratos"
+    "docker-run": "docker run -d --restart unless-stopped outdatedversion/kratos"
   },
   "dependencies": {
     "bugsnag": "^2.0.1",
@@ -18,8 +18,7 @@
     "discord.js": "^11.2.1",
     "moment": "^2.19.1",
     "mongoose": "^4.13.5",
-    "pino": "^4.7.2",
-    "ytdl-core": "^0.18.3"
+    "pino": "^4.7.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

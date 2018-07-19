@@ -1,8 +1,20 @@
 import mongoose from 'mongoose'
-import log from '../logging'
+import { createLogger } from '../logging'
 
-mongoose.connect('mongodb://localhost/kratos', { useMongoClient: true })
+const log = createLogger('Database')
+
+const host = `${process.env.DOCKER_HOST_ADDRESS}:27017`
+
+log.info(`connecting to mongo instance @ ${host}`)
+
+mongoose.connect(`mongodb://${host}/kratos`, { useMongoClient: true })
 mongoose.Promise = Promise
+
+const { connection } = mongoose
+
+connection.on('error', log.error.bind(log))
+
+connection.once('open', () => log.info(`connected to mongo instance @ ${host}`))
 
 process.on('cleanup', () =>
 {
