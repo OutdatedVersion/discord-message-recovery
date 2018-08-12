@@ -5,7 +5,7 @@
   "author": "Ben (OutdatedVersion)",
   "private": true,
   "scripts": {
-    "dev": "export NODE_ENV=dev nodemon -q -w src -x 'babel-node src/index.js'",
+    "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'",
     "build": "babel src -d dist",
     "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node dist/index.js",
     "docker-build": "docker build -t outdatedversion/kratos .",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-remove-comments": "^2.0.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.18.3"
   }
 }
