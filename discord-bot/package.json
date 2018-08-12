@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'",
-    "build": "babel src -d dist",
-    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node dist/index.js",
+    "build": "babel src -d build",
+    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node build/index.js",
     "docker-build": "docker build -t outdatedversion/kratos .",
     "docker-run": "docker run -d --restart unless-stopped outdatedversion/kratos"
   },
