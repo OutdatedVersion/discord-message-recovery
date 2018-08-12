@@ -1,6 +1,6 @@
 import pino from 'pino'
 import chalk from 'chalk'
-import moment from 'moment'
+import { format } from 'date-fns'
 
 
 /**
@@ -20,7 +20,7 @@ const formattedLevels = {
  * @returns {String} The current date and time in a human readable format
  */
 function formattedDate() {
-    return moment().format('MMM/D h:mm:ssa')
+    return format(new Date(), 'MMM/D h:mm:ssa')
 }
 
 // create a stream that spits out nice lookin lines
