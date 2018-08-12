@@ -2,8 +2,7 @@ import { Command } from '.'
 
 export default new Command(
     'cleanup',
-    async (message, args) => 
-    {
+    async (message, args) => {
         const limit = parseInt(args[0])
 
         if (!limit)

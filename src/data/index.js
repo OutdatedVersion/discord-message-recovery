@@ -13,7 +13,6 @@ mongoose.Promise = Promise
 const { connection } = mongoose
 
 connection.on('error', log.error.bind(log))
-
 connection.once('open', () => log.info(`connected to mongo instance @ ${host}`))
 
 process.on('cleanup', () =>
