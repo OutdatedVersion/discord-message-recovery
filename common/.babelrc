@@ -1,0 +1,10 @@
+{
+    "comments": false,
+    "presets": [[
+        "env", {
+            "targets": {
+                "node": "current"
+            }
+        }
+    ]]
+}
