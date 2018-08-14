@@ -1,0 +1,20 @@
+{
+  "name": "message-recovery-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d build",
+    "prod": "node build/index.js",
+    "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'"
+  },
+  "dependencies": {
+    "common": "file:../common",
+    "koa": "^2.5.2",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.3"
+  }
+}
