@@ -1,12 +1,12 @@
 import client from './discord'
-import log, { updateLoggingLevel } from './logging'
+import { logging as log } from 'common'
 import { token } from '../config'
 import { setupHandler } from './command'
 import { setup } from './feature'
 import error from './error'
 
 // dev
-updateLoggingLevel('debug')
+log.updateLoggingLevel('debug')
 
 // setup command system
 setupHandler(client)

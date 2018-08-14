@@ -46,6 +46,12 @@ ansi-styles@^3.1.0:
   dependencies:
     color-convert "^1.9.0"
 
+ansi-styles@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
+  dependencies:
+    color-convert "^1.9.0"
+
 anymatch@^1.3.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
@@ -642,6 +648,10 @@ babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
+backo@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/backo/-/backo-1.1.0.tgz#a36c4468923f2d265c9e8a709ea56ecdaff807e6"
+
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -738,6 +748,10 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+browser-fingerprint@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/browser-fingerprint/-/browser-fingerprint-0.0.1.tgz#8df3cdca25bf7d5b3542d61545d730053fce604a"
+
 browserslist@^2.1.2:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.9.1.tgz#b72d3982ab01b5cd24da62ff6d45573886aff275"
@@ -757,6 +771,17 @@ bugsnag@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/bugsnag/-/bugsnag-2.0.1.tgz#e155c11e7e6ae8b052f81eef710de2727db20f84"
   dependencies:
+    json-stringify-safe "~5.0.1"
+    promise "7.x"
+    request "^2.81.0"
+    stack-trace "~0.0.9"
+
+bugsnag@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/bugsnag/-/bugsnag-2.4.3.tgz#c63129d6a95b9719774ac941537412300fc79044"
+  dependencies:
+    backo "^1.1.0"
+    cuid "^1.3.8"
     json-stringify-safe "~5.0.1"
     promise "7.x"
     request "^2.81.0"
@@ -809,6 +834,14 @@ chalk@^2.0.1, chalk@^2.1.0:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
+
+chalk@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
+  dependencies:
+    ansi-styles "^3.2.1"
+    escape-string-regexp "^1.0.5"
+    supports-color "^5.3.0"
 
 chokidar@^1.6.1:
   version "1.7.0"
@@ -900,6 +933,14 @@ commander@^2.11.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.1.tgz#468635c4168d06145b9323356d1da84d14ac4a7a"
 
+common@../common:
+  version "1.0.0"
+  dependencies:
+    bugsnag "^2.4.3"
+    chalk "^2.4.1"
+    date-fns "^1.29.0"
+    pino "^5.0.4"
+
 component-emitter@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
@@ -930,6 +971,10 @@ convert-source-map@^1.5.0:
 copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
+
+core-js@^1.1.1:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.1"
@@ -968,6 +1013,14 @@ cryptiles@3.x.x:
 crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
+
+cuid@^1.3.8:
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/cuid/-/cuid-1.3.8.tgz#4b875e0969bad764f7ec0706cf44f5fb0831f6b7"
+  dependencies:
+    browser-fingerprint "0.0.1"
+    core-js "^1.1.1"
+    node-fingerprint "0.0.2"
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -1184,7 +1237,7 @@ fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
-fast-json-parse@^1.0.0:
+fast-json-parse@^1.0.0, fast-json-parse@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/fast-json-parse/-/fast-json-parse-1.0.3.tgz#43e5c61ee4efa9265633046b770fb682a7577c4d"
 
@@ -1192,9 +1245,17 @@ fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
 
+fast-redact@^1.1.14:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-1.1.14.tgz#95e5a05c8046b9cd61a203266a4acb2ae635574f"
+
 fast-safe-stringify@^1.0.8, fast-safe-stringify@^1.1.11:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-1.2.0.tgz#ebd42666fd18fe4f2ba4f0d295065f3f85cade96"
+
+fast-safe-stringify@^2.0.4:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.5.tgz#cdb2d02d41329afbe67eff073598811d482609e3"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -1222,6 +1283,10 @@ fill-range@^4.0.0:
 flatstr@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/flatstr/-/flatstr-1.0.5.tgz#5b451b08cbd48e2eac54a2bbe0bf46165aa14be3"
+
+flatstr@^1.0.5:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/flatstr/-/flatstr-1.0.8.tgz#0e849229751f2b9f6a0919f8e81e1229e84ba901"
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -2078,6 +2143,10 @@ needle@^2.2.1:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
+node-fingerprint@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/node-fingerprint/-/node-fingerprint-0.0.2.tgz#31cbabeb71a67ae7dd5a7dc042e51c3c75868501"
+
 node-pre-gyp@^0.10.0:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.10.3.tgz#3070040716afdc778747b61b6887bf78880b80fc"
@@ -2297,6 +2366,10 @@ pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
 
+pino-std-serializers@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-2.2.0.tgz#2c97a636dcbe6947a7be518f5d06b7804f5c48ae"
+
 pino@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/pino/-/pino-4.7.2.tgz#56e8e712637669095f0a61b27a15649d62dec8cd"
@@ -2308,6 +2381,19 @@ pino@^4.7.2:
     pump "^1.0.2"
     quick-format-unescaped "^1.1.1"
     split2 "^2.0.1"
+
+pino@^5.0.4:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-5.0.5.tgz#7dd4043025ede87bfc4d6077b5e204ded351c18d"
+  dependencies:
+    fast-json-parse "^1.0.3"
+    fast-redact "^1.1.14"
+    fast-safe-stringify "^2.0.4"
+    flatstr "^1.0.5"
+    pino-std-serializers "^2.2.0"
+    pump "^3.0.0"
+    quick-format-unescaped "^3.0.0"
+    sonic-boom "^0.6.0"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -2362,6 +2448,13 @@ pump@^1.0.2:
     end-of-stream "^1.1.0"
     once "^1.3.1"
 
+pump@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/pump/-/pump-3.0.0.tgz#b4a2116815bde2f4e1ea602354e8c75565107a64"
+  dependencies:
+    end-of-stream "^1.1.0"
+    once "^1.3.1"
+
 punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
@@ -2379,6 +2472,10 @@ quick-format-unescaped@^1.1.1:
   resolved "https://registry.yarnpkg.com/quick-format-unescaped/-/quick-format-unescaped-1.1.1.tgz#e77555ef3e66e105d4039e13ef79201284fee916"
   dependencies:
     fast-safe-stringify "^1.0.8"
+
+quick-format-unescaped@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/quick-format-unescaped/-/quick-format-unescaped-3.0.0.tgz#21e7fdc5b08b079ef71ed0728ed0725e58671e41"
 
 randomatic@^1.1.3:
   version "1.1.7"
@@ -2734,6 +2831,12 @@ sntp@2.x.x:
   dependencies:
     hoek "4.x.x"
 
+sonic-boom@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/sonic-boom/-/sonic-boom-0.6.0.tgz#c1a6ef9444b0b83bcafeb48731e4b26254cca3d5"
+  dependencies:
+    flatstr "^1.0.5"
+
 source-map-resolve@^0.5.0:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/source-map-resolve/-/source-map-resolve-0.5.2.tgz#72e2cc34095543e43b2c62b2c4c10d4a9054f259"
@@ -2862,7 +2965,7 @@ supports-color@^4.0.0:
   dependencies:
     has-flag "^2.0.0"
 
-supports-color@^5.2.0:
+supports-color@^5.2.0, supports-color@^5.3.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:

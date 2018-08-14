@@ -1,5 +1,5 @@
 import client from '../discord'
-import log  from '../logging'
+import { logging as log } from 'common'
 import { formatName } from '../utility/user'
 import { RemovedMessage } from '../data'
 import { Command, hasCommand } from '../command'
