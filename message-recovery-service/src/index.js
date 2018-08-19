@@ -1,24 +1,32 @@
 import Koa from 'koa'
-import Router from 'koa-router'
-import { logging as log } from 'common'
-import { execSync } from 'child_process';
+import log, { createLogger } from 'common-logging'
+import RouteRegistry from 'common-routing'
+import { registerClient, koaHandler } from 'common-error'
+import MessageRoute from './route/message'
 
 const koa = new Koa()
-const router = new Router()
 
-// For testing
-const hostname = execSync("hostname").toString()
+// Error handling
+registerClient(process.env.BUGSNAG_TOKEN, { })
 
-router.get("/message/:guildID", async (context) => {
-    context.body = hostname
-})
+function registerRoutes() {
+    const routingLog = createLogger('Routing')
+    const registry = new RouteRegistry()
 
-router.post("/message/:guildID", async (context) => {
+    registry.on('tracking', data => routingLog.info(`Now tracking ${data.method} ${data.path}`))
+    registry.on('error', error => {
+        // encountered issue whilst handling request..
+        // TODO(ben): Use third-party reporting solution
+        
+        log.error(error.stack)
+    })
 
-})
+    registry.register(
+        new MessageRoute()
+    ).transferTo(koa)
+}
 
-koa.use(router.allowedMethods())
-koa.use(router.routes())
+registerRoutes()
 
 koa.listen(2000, () => {
     log.info(`up and running at ...`)
