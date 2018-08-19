@@ -933,7 +933,7 @@ commander@^2.11.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.1.tgz#468635c4168d06145b9323356d1da84d14ac4a7a"
 
-common@../common:
+common-logging@../common/logging:
   version "1.0.0"
   dependencies:
     bugsnag "^2.4.3"
@@ -1254,8 +1254,8 @@ fast-safe-stringify@^1.0.8, fast-safe-stringify@^1.1.11:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-1.2.0.tgz#ebd42666fd18fe4f2ba4f0d295065f3f85cade96"
 
 fast-safe-stringify@^2.0.4:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.5.tgz#cdb2d02d41329afbe67eff073598811d482609e3"
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -2383,8 +2383,8 @@ pino@^4.7.2:
     split2 "^2.0.1"
 
 pino@^5.0.4:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/pino/-/pino-5.0.5.tgz#7dd4043025ede87bfc4d6077b5e204ded351c18d"
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-5.1.1.tgz#6d79ed20d667f4c153308e38c65e66157c9a0a7a"
   dependencies:
     fast-json-parse "^1.0.3"
     fast-redact "^1.1.14"

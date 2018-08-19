@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import { logging } from 'common'
+import { createLogger } from 'common-logging'
 
-const log = logging.createLogger('Database')
+const log = createLogger('Database')
 
 const host = `${process.env.DOCKER_HOST_ADDRESS}:27017`
 

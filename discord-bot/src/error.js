@@ -1,6 +1,6 @@
 import bugsnag from 'bugsnag'
 import { bugsnag as token } from '../config'
-import { logging as log } from 'common'
+import log from 'common-logging'
 
 // setup client
 bugsnag.register(token)

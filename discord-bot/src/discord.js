@@ -1,5 +1,5 @@
 import Discord from 'discord.js'
-import { logging as log } from 'common'
+import log from 'common-logging'
 import { games } from '../config'
 import { setInterval } from 'timers'
 
