@@ -5,12 +5,15 @@
   "scripts": {
     "build": "babel src -d build",
     "prod": "node build/index.js",
-    "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'"
+    "dev": "export NODE_ENV=dev && export BUGSNAG_TOKEN=683568b765e8a637fa38e04ec681ce6a && nodemon -q -w src -x 'babel-node src/index.js'"
   },
   "dependencies": {
-    "common": "file:../common",
+    "common-error": "file:../common/error/",
+    "common-logging": "file:../common/logging",
+    "common-routing": "file:../common/routing",
     "koa": "^2.5.2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "pg": "^7.4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-recovery-api
+  labels:
+    app: kratos
+    service: message-recovery
+    tier: api
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: kratos
+    service: message-recovery
+    tier: api
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-recovery-api
+  labels:
+    app: kratos
+    service: message-recovery
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kratos
+      service: message-recovery
+  template:
+    metadata:
+      name: message-recovery-nginx
+      labels:
+        app: kratos
+        service: message-recovery
+        tier: api
+    spec:
+      containers:
+        - name: app
+          image: nginx:alpine
+          # kratos/message-recovery-api:<git hash>
+          ports:
+            - containerPort: 80
+              name: http
