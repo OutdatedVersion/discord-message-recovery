@@ -1,0 +1,9 @@
+{
+  "name": "routing",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "boom": "^7.2.0"
+  }
+}

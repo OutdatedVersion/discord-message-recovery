@@ -1,19 +1,10 @@
 {
   "name": "common",
   "version": "1.0.0",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "babel src -d build"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-remove-comments": "^2.0.0",
+  "dependencies": {
     "babel-preset-env": "^1.7.0"
   },
-  "dependencies": {
-    "bugsnag": "^2.4.3",
-    "chalk": "^2.4.1",
-    "date-fns": "^1.29.0",
-    "pino": "^5.0.4"
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
   }
 }
