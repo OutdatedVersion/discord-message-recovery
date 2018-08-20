@@ -15,7 +15,6 @@ const BUCKET_NAME = 'message-recovery-media'
 
 // TODO(ben): handle errors in every stage of media upload process
 // TODO(ben): create system to normalize responses
-// TODO(ben): setup pagination and response limiting stuff
 // TODO(ben): update discord bot to to use this service
 // TODO(ben): setup kubernetes deployments for both the discord bot and this; the gateway needs to serve minio stuff too
 
@@ -26,13 +25,19 @@ export default class MessageRoute extends CRUDRouteDefinition {
     }
 
     async get(context) {
+        const guildID = parseInt(context.params.guildID)
         const limit = Math.min(50, context.query.limit) || 50
         const before = parseInt(context.query.before) || Date.now()
+
+        if (isNaN(guildID)) {
+            context.body = Boom.badRequest('Malformed Discord guild ID')
+            return
+        }
 
         const client = await captureClient()
 
         try {
-            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`)
+            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.discord_guild_id = ${guildID} AND message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`)
 
             context.body = {
                 success: true,
