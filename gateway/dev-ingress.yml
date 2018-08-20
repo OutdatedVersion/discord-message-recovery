@@ -1,0 +1,33 @@
+# TODO(ben): Make sure we control access to the dashboard
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web-ui
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - host: kratos.local.dev.outdatedversion.com
+    http:
+      paths:
+      - path: /traefik
+        backend:
+          serviceName: traefik-web-ui
+          servicePort: 80
+      - path: /storage
+        backend:
+          serviceName: minio-public
+          servicePort: 9000
