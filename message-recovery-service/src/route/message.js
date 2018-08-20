@@ -130,7 +130,7 @@ async function uploadRemoteFile(url, objectName) {
 
 function downloadFile(url) {
     return new Promise((resolve, reject) => {
-        const path = `/tmp/a/${uuid()}`
+        const path = `/tmp/${uuid()}`
 
         const stream = createWriteStream(path)
 
