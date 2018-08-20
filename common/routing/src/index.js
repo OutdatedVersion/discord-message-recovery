@@ -87,30 +87,37 @@ export default class RouteRegistry extends EventEmitter {
         this._router.register(path, parseMethod(method), async context => {
             try {
                 function extractBodyEntry(key) {
+                    const absoluteKey = key.replace(/\?$/, '')
+
                     if (!context.request.body) {
                         context.body = Boom.badRequest(`Missing/empty body`)
                         throw new Error('missing body item')
                     }
 
-                    const item = context.request.body[key]
+                    const value = context.request.body[absoluteKey]
 
-                    if (item === undefined && !key.endsWith('?')) {
-                        context.body = Boom.badRequest(`Missing body member '${key}'`)
+                    if (value === undefined && !key.endsWith('?')) {
+                        context.body = Boom.badRequest(`Missing body member '${absoluteKey}'`)
                         throw new Error('missing body item')
                     }
 
-                    return item
+                    return {
+                        key: absoluteKey,
+                        value
+                    }
                 }
 
                 function toObject(keys) {
                     return keys.reduce((object, value) => {
-                        object[value] = extractBodyEntry(value)
+                        const entry = extractBodyEntry(value)
+
+                        object[entry.key] = entry.value
 
                         return object
                     }, { })
                 }
 
-                context.fromBody = (...keys) => keys.length > 1 ? toObject(keys) : extractBodyEntry(keys)
+                context.fromBody = (...keys) => keys.length > 1 ? toObject(keys) : extractBodyEntry(keys).value
 
                 await handle.call(definition, context)
             }
