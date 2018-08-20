@@ -3,8 +3,10 @@ import BodyParser from 'koa-bodyparser'
 import log, { createLogger } from 'common-logging'
 import RouteRegistry from 'common-routing'
 import reportError, { registerClient, koaHandler } from 'common-error'
-import MessageRoute from './route/message'
 import { createSchemas } from './database/postgres'
+import { ready } from './ready';
+import MessageRoute from './route/message'
+import { HealthRoute, ReadyRoute } from './route/health'
 
 const app = new Koa()
 
@@ -19,7 +21,9 @@ function registerRoutes() {
     })
 
     registry.register(
-        new MessageRoute()
+        new MessageRoute(),
+        new HealthRoute(),
+        new ReadyRoute()
     ).transferTo(app)
 }
 
@@ -34,6 +38,7 @@ async function start() {
     await createSchemas()
 
     app.listen(2000, () => {
+        ready()
         log.info(`up and running at ...`)
     })
 }

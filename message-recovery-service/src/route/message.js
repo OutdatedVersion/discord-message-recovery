@@ -92,6 +92,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
 
                     if (meta) {
                         // Upload media to Minio instance
+                        
                         try {
                             await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
 

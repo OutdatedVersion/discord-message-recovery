@@ -43,3 +43,14 @@ spec:
           ports:
             - containerPort: 2000
               name: http
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: 2000
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /_ready
+              port: 2000
+            periodSeconds: 3
