@@ -17,7 +17,9 @@ const BUCKET_NAME = 'message-recovery-media'
 // TODO(ben): probably break this up some so that it appears a bit cleaner
 // TODO(ben): handle errors in every stage of media upload process
 // TODO(ben): create system to normalize responses
-// TODO(ben): break into proper kubernetes pods / update discord bot to to use this service
+// TODO(ben): setup pagination and response limiting stuff
+// TODO(ben): update discord bot to to use this service
+// TODO(ben): setup kubernetes deployments for both the discord bot and this; the gateway needs to serve minio stuff too
 
 export default class MessageRoute extends CRUDRouteDefinition {
     
