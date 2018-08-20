@@ -94,7 +94,7 @@ export default class RouteRegistry extends EventEmitter {
 
                     const item = context.request.body[key]
 
-                    if (item === undefined) {
+                    if (item === undefined && !key.endsWith('?')) {
                         context.body = Boom.badRequest(`Missing body member '${key}'`)
                         throw new Error('missing body item')
                     }
@@ -102,7 +102,15 @@ export default class RouteRegistry extends EventEmitter {
                     return item
                 }
 
-                context.fromBody = (...keys) => keys.length > 1 ? keys.map(extractBodyEntry) : extractBodyEntry(keys)
+                function toObject(keys) {
+                    return keys.reduce((object, value) => {
+                        object[value] = extractBodyEntry(value)
+
+                        return object
+                    }, { })
+                }
+
+                context.fromBody = (...keys) => keys.length > 1 ? toObject(keys) : extractBodyEntry(keys)
 
                 await handle.call(definition, context)
             }

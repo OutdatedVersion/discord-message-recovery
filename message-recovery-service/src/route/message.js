@@ -13,7 +13,6 @@ import { createWriteStream, unlinkSync } from 'fs'
  */
 const BUCKET_NAME = 'message-recovery-media'
 
-// TODO(ben): probably break this up some so that it appears a bit cleaner
 // TODO(ben): handle errors in every stage of media upload process
 // TODO(ben): create system to normalize responses
 // TODO(ben): setup pagination and response limiting stuff
@@ -48,18 +47,10 @@ export default class MessageRoute extends CRUDRouteDefinition {
     }
 
     async post(context) {
-        const [
-            content,
-            discordChannelID,
-            discordMessageID,
-            discordGuildID,
-            sentAt,
-            removedAt
-        ] = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentAt', 'removedAt')
+        const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentAt', 'removedAt', 'media?')
 
-        const { media } = context.request.body
-
-        if (media && !Array.isArray(media)) {
+        // TODO(ben): Bake body validation into fromBody
+        if (data.media && !Array.isArray(data.media)) {
             context.body = Boom.badRequest(`Malformed body member: 'media' must be an array`)
             return
         }
@@ -71,21 +62,21 @@ export default class MessageRoute extends CRUDRouteDefinition {
 
             const result = await client.query(
                 'INSERT INTO message (discord_guild_id, discord_channel_id, discord_message_id, content, sent_at, removed_at) VALUES ($1, $2, $3, $4, to_timestamp($5), to_timestamp($6)) RETURNING id;',
-                [discordGuildID, discordChannelID, discordMessageID, content, sentAt, removedAt]
+                [data.discordGuildID, data.discordChannelID, data.discordMessageID, data.content, data.sentAt, data.removedAt]
             )
 
             const { id } = result.rows[0]
 
-            if (media) {
+            if (data.media) {
                 let sql = 'INSERT INTO message_media (message_id, name, type) VALUES ', index = 1
                 const parameters = []
                 
-                for (const url of media) {
+                for (const url of data.media) {
                     const meta = extractURLInfo(url)
 
                     if (meta) {
                         // Upload media to Minio instance
-                        await uploadRemoteFile(url, `${discordChannelID}/${discordMessageID}/${meta.full}`).catch(error => console.error(error.stack))
+                        await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`).catch(error => console.error(error.stack))
 
                         sql += `${parameters.length == 0 ? '' : ', '}($${index++}, $${index++}, $${index++})`
                         parameters.push(id, meta.name, meta.extension)
