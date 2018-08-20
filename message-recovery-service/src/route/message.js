@@ -13,7 +13,6 @@ import { createWriteStream, unlinkSync } from 'fs'
  */
 const BUCKET_NAME = 'message-recovery-media'
 
-// TODO(ben): put some random thing in a file's name (maybe store that seperate?) in case their are duplicates - like lots of youtube thumbnails or somethin
 // TODO(ben): probably break this up some so that it appears a bit cleaner
 // TODO(ben): handle errors in every stage of media upload process
 // TODO(ben): create system to normalize responses
@@ -148,7 +147,7 @@ function extractURLInfo(text) {
         const { pathname } = new URL(text)
 
         const extension = pathname.substring(pathname.lastIndexOf('.') + 1, pathname.length)
-        const name = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length - (extension.length + 1))
+        const name = `${pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length - (extension.length + 1))}.${Math.floor(Math.random() * 100000)}`
 
         return {
             full: `${name}.${extension}`,
