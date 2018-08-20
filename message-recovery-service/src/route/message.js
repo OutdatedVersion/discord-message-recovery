@@ -26,10 +26,13 @@ export default class MessageRoute extends CRUDRouteDefinition {
     }
 
     async get(context) {
+        const limit = Math.min(50, context.query.limit) || 50
+        const before = parseInt(context.query.before) || Date.now()
+
         const client = await captureClient()
 
         try {
-            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id GROUP BY message.id;`)
+            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`)
 
             context.body = {
                 success: true,
