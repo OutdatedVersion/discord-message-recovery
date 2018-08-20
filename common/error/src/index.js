@@ -59,20 +59,15 @@ export default function reportError(error) {
  * @param {Function} next
  */
 export async function koaHandler(context, next) {
-    console.log('fuck u')
     await next()
 
-    console.log(context.body)
-
-    if (context.body && context.body.isBoom)
-    {
+    if (context.body && context.body.isBoom) {
         const { output } = context.body
 
         context.status = output.statusCode
         context.body = output.payload
     }
-    else if (context.status != 200)
-    {
+    else if (context.status != 200) {
         context.body = StatusToError[context.status](context)
     }
 }

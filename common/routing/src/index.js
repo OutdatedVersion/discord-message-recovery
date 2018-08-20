@@ -107,8 +107,10 @@ export default class RouteRegistry extends EventEmitter {
                 await handle.call(definition, context)
             }
             catch (error) {
-                if (error.message !== 'missing body item')
+                if (error.message !== 'missing body item') {
+                    context.body = Boom.internal()
                     this.emit('error', error)
+                }
             }
         })
 

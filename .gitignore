@@ -2,7 +2,7 @@
 .vscode
 
 # node
-**/*/node_modules
+*/node_modules
 
 # project
 */build
