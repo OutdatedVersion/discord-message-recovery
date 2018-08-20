@@ -7,13 +7,13 @@ metadata:
     service: message-recovery
     tier: api
 spec:
-  ports:
-    - port: 80
-      name: http
   selector:
     app: kratos
     service: message-recovery
     tier: api
+  ports:
+    - port: 80
+      targetPort: http
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -31,16 +31,15 @@ spec:
       service: message-recovery
   template:
     metadata:
-      name: message-recovery-nginx
+      name: message-recovery-api
       labels:
         app: kratos
         service: message-recovery
         tier: api
     spec:
       containers:
-        - name: app
-          image: nginx:alpine
-          # kratos/message-recovery-api:<git hash>
+        - name: api
+          image: outdatedversion/kratos-message-recovery-service:f74910a5
           ports:
-            - containerPort: 80
+            - containerPort: 2000
               name: http

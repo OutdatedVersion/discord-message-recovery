@@ -1,2 +1,0 @@
-# nginx deployment
-# app deployment

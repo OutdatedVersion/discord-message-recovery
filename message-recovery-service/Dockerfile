@@ -7,10 +7,7 @@ WORKDIR /usr/app
 # move requires files
 COPY package.json yarn.lock ./
 
-# setup..
-RUN yarn install -q
-
 # move source over..
-COPY . .
+COPY ./build ./node_modules ./
 
 CMD [ "yarn", "prod" ]
