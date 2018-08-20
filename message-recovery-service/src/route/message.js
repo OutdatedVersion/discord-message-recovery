@@ -146,7 +146,7 @@ function extractURLInfo(text) {
         const { pathname } = new URL(text)
 
         const extension = pathname.substring(pathname.lastIndexOf('.') + 1, pathname.length)
-        const name = `${pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length - (extension.length + 1))}.${Math.floor(Math.random() * 100000)}`
+        const name = `${pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length - (extension.length + 1))}.${Math.floor(Math.random() * 1000)}`
 
         return {
             full: `${name}.${extension}`,
