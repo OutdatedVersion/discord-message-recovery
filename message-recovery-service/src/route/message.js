@@ -7,6 +7,10 @@ import Boom from 'boom'
 import request from 'request-promise-native'
 import uuid from 'uuid/v4'
 import { createWriteStream, unlinkSync } from 'fs'
+import { createLogger } from 'common-logging'
+import reportError from 'common-error'
+
+const log = createLogger('Route/Message')
 
 /**
  * The name of the storage bucket where message media is stored
@@ -65,6 +69,10 @@ export default class MessageRoute extends CRUDRouteDefinition {
 
         const client = await captureClient()
 
+        async function rollbackTransaction() {
+            await client.query('ROLLBACK')
+        }
+
         try {
             await client.query('BEGIN')
 
@@ -84,10 +92,22 @@ export default class MessageRoute extends CRUDRouteDefinition {
 
                     if (meta) {
                         // Upload media to Minio instance
-                        await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`).catch(error => console.error(error.stack))
+                        try {
+                            await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
 
-                        sql += `${parameters.length == 0 ? '' : ', '}($${index++}, $${index++}, $${index++})`
-                        parameters.push(id, meta.name, meta.extension)
+                            sql += `${parameters.length == 0 ? '' : ', '}($${index++}, $${index++}, $${index++})`
+                            parameters.push(id, meta.name, meta.extension)
+                        }
+                        catch (error) {
+                            await rollbackTransaction()
+
+                            context.body = Boom.internal(`Failed to upload media ${url}`)
+
+                            log.error(error.stack)
+                            reportError(error)
+
+                            return
+                        }
                     }
                 }
 
@@ -101,7 +121,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
             }
         }
         catch (error) {
-            await client.query('ROLLBACK')
+            await rollbackTransaction()
 
             if (error.code == PostgresResponseCode.UNIQUE_VIOLATION) {
                 context.body = {
@@ -122,9 +142,9 @@ export default class MessageRoute extends CRUDRouteDefinition {
 }
 
 async function uploadRemoteFile(url, objectName) {
-    const path = await downloadFile(url).catch(error => console.error('download'))
+    const path = await downloadFile(url)
     
-    await minio.fPutObject(BUCKET_NAME, objectName, path).catch(error => console.error('minio', error))
+    await minio.fPutObject(BUCKET_NAME, objectName, path)
     unlinkSync(path)
 }
 
