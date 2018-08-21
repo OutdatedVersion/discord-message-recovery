@@ -7,10 +7,9 @@ WORKDIR /usr/app
 # move requires files
 COPY package.json yarn.lock ./
 
-# build the code
-RUN ["yarn", "build"]
+# get the required modules in place
+RUN ["yarn", "install", "--registry", "https://npm-registry.outdatedversion.com"]
 
-# move source over..
-COPY ./build ./node_modules ./
+COPY . ./
 
 CMD [ "yarn", "prod" ]
