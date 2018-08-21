@@ -1,5 +1,5 @@
 {
-  "name": "error",
-  "version": "1.0.0",
+  "name": "@kratos/error",
+  "version": "1.0.1",
   "main": "build/index.js"
 }
