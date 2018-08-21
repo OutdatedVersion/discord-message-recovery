@@ -37,20 +37,23 @@ spec:
         service: message-recovery
         tier: api
     spec:
+      imagePullSecrets:
+          - name: outdatedversion-private-registry
       containers:
         - name: api
-          image: outdatedversion/kratos-message-recovery-service:f74910a5
+          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:796eeab0
           ports:
             - containerPort: 2000
               name: http
           readinessProbe:
             httpGet:
-              path: /_health
+              path: /_ready
               port: 2000
             initialDelaySeconds: 5
             periodSeconds: 3
           livenessProbe:
             httpGet:
-              path: /_ready
+              path: /_health
               port: 2000
-            periodSeconds: 3
+            periodSeconds: 1
+            initialDelaySeconds: 1

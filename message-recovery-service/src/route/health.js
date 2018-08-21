@@ -1,5 +1,6 @@
 import { RouteDefinition } from "common-routing"
 import { captureClient } from "../database/postgres"
+import log from 'common-logging'
 import minio from "../database/minio"
 import isReady from "../ready"
 
@@ -33,5 +34,7 @@ export class ReadyRoute extends RouteDefinition {
 
     async handle(context) {
         context.status = isReady() ? 200 : 500
+
+        log.info(`received ready probe, response: ${context.status}`)
     }
 }
