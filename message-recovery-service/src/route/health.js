@@ -18,7 +18,7 @@ export class HealthRoute extends RouteDefinition {
 
             context.status = 200
         }
-        catch {
+        catch (error) {
             context.status = 500
         }
         finally {
