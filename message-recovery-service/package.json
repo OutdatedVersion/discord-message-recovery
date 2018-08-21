@@ -8,10 +8,10 @@
     "dev": "export NODE_ENV=dev && export BUGSNAG_TOKEN=683568b765e8a637fa38e04ec681ce6a && export PGDATABASE=kratos_message_recovery && export PGUSER=kratos_dev && export PGPASSWORD=dev && export MINIO_HOST=localhost && export MINIO_PORT=9000 && export MINIO_ACCESS_KEY=minio && MINIO_SECRET_KEY=minio123 && nodemon -q -w src -x 'babel-node src/index.js'"
   },
   "dependencies": {
+    "@kratos/error": "^1.0.1",
+    "@kratos/logging": "^1.0.1",
+    "@kratos/routing": "^1.0.1",
     "boom": "^7.2.0",
-    "common-error": "file:../common/error/",
-    "common-logging": "file:../common/logging",
-    "common-routing": "file:../common/routing",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
