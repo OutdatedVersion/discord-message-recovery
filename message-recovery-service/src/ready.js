@@ -1,4 +1,4 @@
-let isReady = false
+let state = false
 
 /**
  * Return the current readiness state.
@@ -6,12 +6,12 @@ let isReady = false
  * @returns {boolean} Whether or not this app is ready
  */
 export default function isReady() {
-    return isReady
+    return state
 }
 
 /**
  * Indicate that this app is now ready to go
  */
 export function ready() {
-    isReady = true
+    state = true
 }
