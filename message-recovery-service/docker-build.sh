@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 version=$(git log -1 --format='format:%H' HEAD -- $PWD | head -c 8)
 imageName="kratos/message-recovery-service:$version"
 registryURL="docker-registry.outdatedversion.com"
