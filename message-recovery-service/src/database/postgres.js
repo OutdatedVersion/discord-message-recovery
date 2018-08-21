@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { readFile as readFileOriginal } from 'fs'
 import { promisify } from 'util'
-import { createLogger } from 'common-logging'
+import { createLogger } from '@kratos/logging'
 
 const readFile = promisify(readFileOriginal)
 

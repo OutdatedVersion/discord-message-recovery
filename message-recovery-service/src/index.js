@@ -1,8 +1,8 @@
 import Koa from 'koa'
 import BodyParser from 'koa-bodyparser'
-import log, { createLogger } from 'common-logging'
-import RouteRegistry from 'common-routing'
-import reportError, { registerClient, koaHandler } from 'common-error'
+import log, { createLogger } from '@kratos/logging'
+import RouteRegistry from '@kratos/routing'
+import reportError, { registerClient, koaHandler } from '@kratos/error'
 import { createSchemas } from './database/postgres'
 import { ready } from './ready';
 import MessageRoute from './route/message'

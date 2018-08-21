@@ -1,6 +1,6 @@
-import { RouteDefinition } from "common-routing"
+import { RouteDefinition } from '@kratos/routing'
 import { captureClient } from "../database/postgres"
-import log from 'common-logging'
+import log from '@kratos/logging'
 import minio from "../database/minio"
 import isReady from "../ready"
 

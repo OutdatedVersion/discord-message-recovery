@@ -1,4 +1,4 @@
-import { CRUDRouteDefinition } from 'common-routing'
+import { CRUDRouteDefinition } from '@kratos/routing'
 import { captureClient } from '../database/postgres'
 import minio from '../database/minio'
 import { URL } from 'url'
@@ -7,8 +7,8 @@ import Boom from 'boom'
 import request from 'request-promise-native'
 import uuid from 'uuid/v4'
 import { createWriteStream, unlinkSync } from 'fs'
-import { createLogger } from 'common-logging'
-import reportError from 'common-error'
+import { createLogger } from '@kratos/logging'
+import reportError from '@kratos/error'
 
 const log = createLogger('Route/Message')
 
