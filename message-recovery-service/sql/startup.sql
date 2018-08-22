@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS message (
     discord_guild_id    BIGINT    NOT NULL,
     discord_channel_id  BIGINT    NOT NULL,
     discord_message_id  BIGINT    NOT NULL,
+    sent_by_discord_id  BIGINT    NOT NULL,
     content             TEXT,
     sent_at             TIMESTAMP NOT NULL DEFAULT NOW(),
     removed_at          TIMESTAMP NOT NULL DEFAULT NOW(),

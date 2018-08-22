@@ -61,7 +61,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
     // TODO(ben): At the moment if this fails everything is lost; there needs to be a requeue system of some sort
 
     async post(context) {
-        const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentAt', 'removedAt', 'media?')
+        const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentByDiscordID', 'sentAt', 'removedAt', 'media?')
 
         // TODO(ben): Bake body validation into fromBody
         if (data.media && !Array.isArray(data.media)) {
@@ -79,8 +79,8 @@ export default class MessageRoute extends CRUDRouteDefinition {
             await client.query('BEGIN')
 
             const result = await client.query(
-                'INSERT INTO message (discord_guild_id, discord_channel_id, discord_message_id, content, sent_at, removed_at) VALUES ($1, $2, $3, $4, to_timestamp($5), to_timestamp($6)) RETURNING id;',
-                [data.discordGuildID, data.discordChannelID, data.discordMessageID, data.content, data.sentAt, data.removedAt]
+                'INSERT INTO message (discord_guild_id, discord_channel_id, discord_message_id, sent_by_discord_id, content, sent_at, removed_at) VALUES ($1, $2, $3, $4, $5, to_timestamp($6), to_timestamp($7)) RETURNING id;',
+                [data.discordGuildID, data.discordChannelID, data.discordMessageID, data.sentByDiscordID, data.content, data.sentAt, data.removedAt]
             )
 
             const { id } = result.rows[0]
