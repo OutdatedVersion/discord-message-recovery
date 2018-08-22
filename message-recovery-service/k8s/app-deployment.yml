@@ -14,7 +14,6 @@ spec:
   ports:
     - port: 80
       targetPort: http
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,10 +40,45 @@ spec:
           - name: outdatedversion-private-registry
       containers:
         - name: api
-          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:3c8bfb06
+          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:b075668e
           ports:
             - containerPort: 2000
               name: http
+          env:
+            - name: BUGSNAG_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: kratos-bugsnag
+                  key: token
+            - name: PGHOST
+              value: message-recovery-postgres
+            - name: PGDATABASE
+              value: message-recovery
+            - name: PGUSER
+              value: message-recovery
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: message-recovery-service-postgres-password
+                  key: password
+            - name: MINIO_HOST
+              value: minio-public
+            - name: MINIO_PORT
+              value: "9000"
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: access
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: secret
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           readinessProbe:
             httpGet:
               path: /_ready
