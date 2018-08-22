@@ -40,7 +40,7 @@ spec:
           - name: outdatedversion-private-registry
       containers:
         - name: api
-          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:b075668e
+          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:f6f5a282
           ports:
             - containerPort: 2000
               name: http
