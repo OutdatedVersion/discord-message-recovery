@@ -1,7 +1,6 @@
 import client from '../discord'
 import log from '@kratos/logging'
 import { formatName } from '../utility/user'
-import { RemovedMessage } from '../data'
 import { Command, hasCommand } from '../command'
 import { distanceInWords } from 'date-fns'
 
@@ -15,12 +14,7 @@ client.on('messageDelete', async message => {
 
     const from = formatName(author)
 
-    await new RemovedMessage({
-        content,
-        from,
-        sentIn: channel.id,
-        at: (new Date).getTime()
-    }).save()
+    // 
 
     log.info(`saved message from ${from} - ${content}`)
 })
@@ -31,10 +25,7 @@ export const command = new Command(
     async (message, args) => {
         const limit = parseInt(args[0]) || 5
 
-        let results = await RemovedMessage.find()
-                                          .limit(limit > 25 ? 25 : limit)
-                                          .sort('-at')
-                                          .exec()
+        // 
 
         const { length } = results
 

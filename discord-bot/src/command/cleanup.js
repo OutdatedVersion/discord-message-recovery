@@ -6,7 +6,7 @@ export default new Command(
         const limit = parseInt(args[0])
 
         if (!limit)
-        {
+{
             message.reply('you did not provide a limit...')
             return
         }
