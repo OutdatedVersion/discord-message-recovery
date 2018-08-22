@@ -5,6 +5,7 @@ import RouteRegistry from '@kratos/routing'
 import reportError, { registerClient, koaHandler } from '@kratos/error'
 import { createSchemas } from './database/postgres'
 import { ready } from './ready';
+import RootRoute from './route/root'
 import MessageRoute from './route/message'
 import { HealthRoute, ReadyRoute } from './route/health'
 
@@ -23,7 +24,8 @@ function registerRoutes() {
     registry.register(
         new MessageRoute(),
         new HealthRoute(),
-        new ReadyRoute()
+        new ReadyRoute(),
+        new RootRoute()
     ).transferTo(app)
 }
 
