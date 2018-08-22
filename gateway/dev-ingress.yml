@@ -1,5 +1,3 @@
-# TODO(ben): Make sure we control access to the dashboard
-
 apiVersion: v1
 kind: Service
 metadata:
