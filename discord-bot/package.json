@@ -14,7 +14,9 @@
     "date-fns": "^1.29.0",
     "discord.js": "^11.2.1",
     "mongoose": "^4.13.5",
-    "pino": "^4.7.2"
+    "pino": "^4.7.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
