@@ -31,3 +31,7 @@ spec:
         backend:
           serviceName: minio-public
           servicePort: 9000
+      - path: /api
+        backend:
+          serviceName: message-recovery-api
+          servicePort: 80
