@@ -10,6 +10,9 @@ COPY package.json yarn.lock ./
 # get the required modules in place
 RUN ["yarn", "install", "--registry", "https://npm-registry.outdatedversion.com"]
 
+# copy SQL files over
+COPY sql/ ./sql
+
 # copy code over
 COPY build/ ./build
 
