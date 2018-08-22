@@ -11,7 +11,7 @@ COPY package.json yarn.lock ./
 RUN ["yarn", "install", "--registry", "https://npm-registry.outdatedversion.com"]
 
 # copy code over
-COPY build/ ./
+COPY build/ ./build
 
 # we'll need this port
 EXPOSE 2000
