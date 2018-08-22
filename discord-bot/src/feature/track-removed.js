@@ -1,5 +1,5 @@
 import client from '../discord'
-import log from 'common-logging'
+import log from '@kratos/logging'
 import { formatName } from '../utility/user'
 import { RemovedMessage } from '../data'
 import { Command, hasCommand } from '../command'

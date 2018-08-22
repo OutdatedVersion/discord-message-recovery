@@ -2,6 +2,15 @@
 # yarn lockfile v1
 
 
+"@kratos/logging@^1.0.1":
+  version "1.0.1"
+  resolved "https://npm-registry.outdatedversion.com/@kratos%2flogging/-/logging-1.0.1.tgz#072e55eafdfc44668747cf7f89363babf7024424"
+  dependencies:
+    bugsnag "^2.4.3"
+    chalk "^2.4.1"
+    date-fns "^1.29.0"
+    pino "^5.0.4"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -932,14 +941,6 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
 commander@^2.11.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.1.tgz#468635c4168d06145b9323356d1da84d14ac4a7a"
-
-common-logging@../common/logging:
-  version "1.0.0"
-  dependencies:
-    bugsnag "^2.4.3"
-    chalk "^2.4.1"
-    date-fns "^1.29.0"
-    pino "^5.0.4"
 
 component-emitter@^1.2.1:
   version "1.2.1"

@@ -1,6 +1,6 @@
 import bugsnag from 'bugsnag'
 import { bugsnag as token } from '../config'
-import log from 'common-logging'
+import log from '@kratos/logging'
 
 // setup client
 bugsnag.register(token)

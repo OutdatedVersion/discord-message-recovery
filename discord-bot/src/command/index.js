@@ -1,6 +1,6 @@
 import Files from 'fs'
 import Path from 'path'
-import log from 'common-logging'
+import log from '@kratos/logging'
 import { command as config } from '../../config'
 import { traverseDirectory } from '../utility/folder'
 import { setTimeout } from 'timers'

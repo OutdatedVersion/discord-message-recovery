@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { createLogger } from 'common-logging'
+import { createLogger } from '@kratos/logging'
 
 const log = createLogger('Database')
 

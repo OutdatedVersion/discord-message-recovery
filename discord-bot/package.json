@@ -1,20 +1,16 @@
 {
-  "name": "kratos",
+  "name": "@kratos/discord-bot",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Ben (OutdatedVersion)",
-  "private": true,
   "scripts": {
     "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'",
     "build": "babel src -d build",
-    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node build/index.js",
-    "docker-build": "docker build -t outdatedversion/kratos .",
-    "docker-run": "docker run -d --restart unless-stopped outdatedversion/kratos"
+    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node build/index.js"
   },
   "dependencies": {
+    "@kratos/logging": "^1.0.1",
     "bugsnag": "^2.0.1",
     "chalk": "^2.1.0",
-    "common-logging": "../common/logging",
     "date-fns": "^1.29.0",
     "discord.js": "^11.2.1",
     "mongoose": "^4.13.5",

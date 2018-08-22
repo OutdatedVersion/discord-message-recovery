@@ -1,5 +1,5 @@
 import client from './discord'
-import log, { updateLoggingLevel } from 'common-logging'
+import log, { updateLoggingLevel } from '@kratos/logging'
 import { token } from '../config'
 import { setupHandler } from './command'
 import { setup } from './feature'

@@ -1,5 +1,5 @@
 import Discord from 'discord.js'
-import log from 'common-logging'
+import log from '@kratos/logging'
 import { games } from '../config'
 import { setInterval } from 'timers'
 
