@@ -10,7 +10,7 @@ export class HealthRoute extends RouteDefinition {
     }
 
     async handle(context) {
-        const client = captureClient()
+        const client = await captureClient()
 
         try {
             await client.query('SELECT 1')

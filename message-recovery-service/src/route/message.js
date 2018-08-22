@@ -58,6 +58,8 @@ export default class MessageRoute extends CRUDRouteDefinition {
         }
     }
 
+    // TODO(ben): At the moment if this fails everything is lost; there needs to be a requeue system of some sort
+
     async post(context) {
         const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentAt', 'removedAt', 'media?')
 
