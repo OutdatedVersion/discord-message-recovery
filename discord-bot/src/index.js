@@ -15,8 +15,7 @@ setup(client)
 client.login(token)
 
 
-function cleanup()
-{
+function cleanup() {
     // notify every part of the app
     process.emit('cleanup')
 

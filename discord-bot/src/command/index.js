@@ -8,10 +8,8 @@ import { setTimeout } from 'timers'
 /**
  * Represenation of a message based command.
  */
-export class Command
-{
-    constructor(executor, handler)
-    {
+export class Command {
+    constructor(executor, handler) {
         this.executors = Array.isArray(executor) ? executor : [ executor ]
         this.handler = handler
     }
@@ -27,8 +25,7 @@ const registeredCommands = new Map()
  * 
  * @param {Command} command Representation of the command
  */
-export function registerCommand(command)
-{
+export function registerCommand(command) {
     const { executors, handler } = command
 
     executors.forEach(executor => registeredCommands.set(executor.toLowerCase(), handler))
@@ -41,8 +38,7 @@ export function registerCommand(command)
  * 
  * @param {string} executor The executor
  */
-export function hasCommand(executor)
-{
+export function hasCommand(executor) {
     if (executor.startsWith(config.prefix))
         executor = executor.substring(config.prefix.length)
 
@@ -57,16 +53,13 @@ export function hasCommand(executor)
  * 
  * @param {Client} client discord.js client
  */
-export function setupHandler(client)
-{
+export function setupHandler(client) {
     traverseDirectory(__dirname, registerCommand)
 
-    client.on('message', message =>
-    {
+    client.on('message', message => {
         const split = message.content.split(' ')
     
-        if (split && split[0].startsWith(config.prefix))
-        {
+        if (split && split[0].startsWith(config.prefix)) {
             const executor = split[0].substring(1).toLowerCase()
             const command = registeredCommands.get(executor)
             
@@ -75,8 +68,7 @@ export function setupHandler(client)
                 message.delete()
             }, 5000))
 
-            if (command)
-            {
+            if (command) {
                 message.timedReply = timedReply
 
                 command(message, split.splice(1))

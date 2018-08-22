@@ -12,8 +12,7 @@ log.info('setup bugsnag reporting')
  * 
  * @param {Error} error The error
  */
-export default function handleError(error)
-{
+export default function handleError(error) {
     bugsnag.notify(error)
     log.error(error)
 }

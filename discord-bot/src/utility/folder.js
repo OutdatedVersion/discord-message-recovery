@@ -1,10 +1,8 @@
 import Files from 'fs'
 import Path from 'path'
 
-export function traverseDirectory(path, parser)
-{
-    Files.readdir(Path.resolve(path), (err, files) =>
-    {
+export function traverseDirectory(path, parser) {
+    Files.readdir(Path.resolve(path), (err, files) => {
         if (err)
             throw err
 

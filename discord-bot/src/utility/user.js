@@ -3,7 +3,6 @@
  * 
  * @param {user} user The user
  */
-export function formatName(user)
-{
+export function formatName(user) {
     return `${user.username}#${user.discriminator}`
 }
