@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-recovery-postgres
+  labels:
+    app: kratos
+    service: message-recovery
+    tier: database
+    type: postgres
+spec:
+  clusterIP: None
+  ports:
+    - port: 5432
+  selector:
+    app: kratos
+    service: message-recovery
+    tier: database
+    type: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    app: kratos
+    service: message-recovery
+    tier: database
+    type: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kratos
+      service: message-recovery
+      tier: database
+      type: postgres
+  template:
+    metadata:
+      labels:
+        app: kratos
+        service: message-recovery
+        tier: database
+        type: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: launcher.gcr.io/google/postgresql10
+        ports:
+        - containerPort: 5432
+          name: postgres
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 1Gi
+          requests:
+           cpu: "500m"
+           memory: 1Gi
+        env:
+          - name: POSTGRES_USER
+            value: "message-recovery"
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: message-recovery-service-postgres-password
+                key: password
+          - name: PGDATA
+            value: "/postgres"
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /postgres
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-ssd
+      resources:
+        requests:
+          storage: 1Gi
