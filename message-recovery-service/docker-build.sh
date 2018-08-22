@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION_FILE="src/version.json"
+VERSION_FILE="build/version.json"
 
 version=$(git log -1 --format='format:%H' HEAD -- $PWD | head -c 8)
 imageName="kratos/message-recovery-service:$version"

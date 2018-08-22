@@ -1,5 +1,5 @@
 import { RouteDefinition } from '@kratos/routing'
-import version from '../version.json'
+import version from '../version'
 
 export default class HealthRoute extends RouteDefinition {
     constructor() {
