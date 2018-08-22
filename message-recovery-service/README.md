@@ -12,6 +12,9 @@ We will be using two datastores to back the service:
   
 xx
 
+## Requirements
+
+Kubernetes Secret: `message-recovery-service-postgres-password`: `password=<the password>`
 
 ### Endpoints
 
