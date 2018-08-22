@@ -13,7 +13,7 @@ echo "Version: $version"
 echo "Building Source"
 yarn build
 
-echo "{\"git\": \"$version\"}" > $VERSION_FILE
+echo "{\"version\": \"$version\"}" > $VERSION_FILE
 
 echo "Building Image"
 sudo docker build -t $imageName .
