@@ -3,7 +3,7 @@ import log from '@kratos/logging'
 import { formatName } from '../utility/user'
 import { Command, hasCommand } from '../command'
 import { distanceInWords } from 'date-fns'
-import makeRequest, { Services } from '../request';
+import makeRequest, { Service } from '../request';
 
 /**
  * A URL template at which media from messages may be found.
@@ -37,12 +37,7 @@ client.on('messageDelete', async message => {
         body.media = mediaURLs
 
     try {
-        await request({
-            method: 'POST',
-            uri: `http://localhost:2000/message/${body.discordGuildID}`,
-            body,
-            json: true
-        })
+        await makeRequest(Service.MESSAGE_RECOVERY, `message/${body.discordGuildID}`, { method: 'POST', body })
 
         log.info(`saved message from ${author.id} -> ${cleanContent}`)
     }
@@ -71,7 +66,7 @@ export const command = new Command(
         }
 
         try {
-            const response = await makeRequest(Services.MESSAGE_RECOVERY, `message/${guildID}`, { limit })
+            const response = await makeRequest(Service.MESSAGE_RECOVERY, `message/${guildID}`, { method: 'GET', qs: { limit } })
             
             if (!response.success) {
                 await notifyOfFailure()
