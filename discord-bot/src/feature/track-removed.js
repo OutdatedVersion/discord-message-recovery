@@ -65,8 +65,7 @@ client.on('messageDelete', async message => {
 export const command = new Command(
     'deleted',
     async (message, args) => {
-        // TODO(ben): make sure to use this limit; also handle if message is too large to send or something like that
-        const limit = parseInt(args[0]) || 5
+        const limit = Math.min(50, parseInt(args[0]) || 5)
 
         const { guild } = message
 
@@ -82,8 +81,7 @@ export const command = new Command(
         }
 
         try {
-            const response = await makeRequest(Services.MESSAGE_RECOVERY, `message/${guildID}`)
-
+            const response = await makeRequest(Services.MESSAGE_RECOVERY, `message/${guildID}`, { limit })
             
             if (!response.success) {
                 console.log(response)
@@ -108,9 +106,9 @@ export const command = new Command(
     }
 )
 
-async function createDiscordMessage(messages, author) {
+async function createDiscordMessage(messages) {
     if (messages.length == 0) {
-        return ['looks like there are no removed messages!']
+        return 'looks like there are no removed messages!'
     }
 
     let discordMessage = getStartingLine(messages)
