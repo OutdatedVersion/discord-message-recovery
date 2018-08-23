@@ -11,8 +11,6 @@ import makeRequest, { Services } from '../request';
 // const STORAGE_URL_BASE = 'https://kratos.outdatedversion.com/storage/message-recovery-media'
 const STORAGE_URL_BASE = 'http://kratos.local.dev.outdatedversion.com/storage/message-recovery-media'
 
-const MAX_DISCORD_MESSAGE_SIZE = 2000
-
 client.on('messageDelete', async message => {
     const { cleanContent, channel, author } = message
 
@@ -20,15 +18,13 @@ client.on('messageDelete', async message => {
     if (!message.guild || author.id == client.user.id || hasCommand(cleanContent))
         return
 
-    const from = formatName(author)
-
     const body = {
         content: cleanContent,
         discordChannelID: channel.id,
         discordMessageID: message.id,
         discordGuildID: message.guild.id,
         sentByDiscordID: author.id,
-        sentAt: message.createdTimestamp,
+        sentAt: message.createdAt.getTime() / 1000,
         removedAt: Date.now()
     }
 
@@ -40,13 +36,7 @@ client.on('messageDelete', async message => {
     if (mediaURLs.length)
         body.media = mediaURLs
 
-    // console.log(body)
-    // 161283779376316417
-    // 161283779376316417
-    // 161283779376316417
-
     try {
-        // kratos.local.dev.outdatedversion.com/api/message-recovery
         await request({
             method: 'POST',
             uri: `http://localhost:2000/message/${body.discordGuildID}`,
@@ -84,7 +74,6 @@ export const command = new Command(
             const response = await makeRequest(Services.MESSAGE_RECOVERY, `message/${guildID}`, { limit })
             
             if (!response.success) {
-                console.log(response)
                 await notifyOfFailure()
                 return
             }
@@ -99,7 +88,6 @@ export const command = new Command(
         }
         catch (error) {
             await notifyOfFailure()
-            console.error(error.stack)
         }
 
         await message.delete()
