@@ -3,7 +3,7 @@ import log from '@kratos/logging'
 import { formatName } from '../utility/user'
 import { Command, hasCommand } from '../command'
 import { distanceInWords } from 'date-fns'
-import request from 'request-promise-native'
+import makeRequest, { Services } from '../request';
 
 /**
  * A URL template at which media from messages may be found.
@@ -82,35 +82,22 @@ export const command = new Command(
         }
 
         try {
-            // kubernetes: http://message-recovery-api/...
-            // local k8s: kratos.local.dev.outdatedversion.com/api/message-recovery/
+            const response = await makeRequest(Services.MESSAGE_RECOVERY, `message/${guildID}`)
 
-            const options = {
-                uri: `http://localhost:2000/message/${guildID}`,
-                qs: {
-                    // limit: 1
-                },  
-                json: true
-            }
-
-            // console.log(`http://kratos.local.dev.outdatedversion.com/api/message-recovery/message/${guildID}`)
-            const response = await request(options)
-
-            // console.log(response)
-
+            
             if (!response.success) {
+                console.log(response)
                 await notifyOfFailure()
                 return
             }
-
+            
             const text = await createDiscordMessage(response.result)
 
-            for (let i = 0; i < text.length; i++) {
-                if (i == 0)
-                    await message.reply(text[i])
-                else
-                    await message.channel.send(text[i])
-            }
+            await message.reply(text, {
+                split: {
+                    prepend: 'continued\n'
+                }
+            })
         }
         catch (error) {
             await notifyOfFailure()
@@ -121,60 +108,41 @@ export const command = new Command(
     }
 )
 
-async function createDiscordMessage(messages) {
+async function createDiscordMessage(messages, author) {
     if (messages.length == 0) {
         return ['looks like there are no removed messages!']
     }
 
-    const discordMessage = []
-    let dirtyDiscordMessage = [getStartingLine(messages), '']
-    let length = lengthOfAllArrayElements(dirtyDiscordMessage)
-
-    dirtyDiscordMessage.push = (...items) => {
-        length += lengthOfAllArrayElements(items)
-
-        if (length > MAX_DISCORD_MESSAGE_SIZE) {
-            discordMessage.push(dirtyDiscordMessage)
-            
-            const newArray = []
-            newArray.push = dirtyDiscordMessage.push
-            dirtyDiscordMessage = newArray
-            length = 0
-        }
-
-        Array.prototype.push.call(dirtyDiscordMessage, ...items)
-    }
+    let discordMessage = getStartingLine(messages)
 
     for (const removedMessage of messages) {
-        const piece = []
+        let piece = '\n\n'
 
         const humanRemovedAt = distanceInWords(new Date(), removedMessage.removed_at, { addSuffix: true })
         const sentBy = await getUserName(removedMessage.sent_by_discord_id)
 
-        piece.push(`:${removedMessage.content ? 'writing_hand' : 'frame_photo'}: ${humanRemovedAt}, ${sentBy}`)
+        piece += `:${removedMessage.content ? 'writing_hand' : 'camera'}: ${humanRemovedAt}, ${sentBy}`
 
         if (removedMessage.content)
-            piece.push('```' + removedMessage.content + '```')
+            piece += '```' + removedMessage.content + '```'
 
         if (removedMessage.media)
-            piece.push(...getMediaMessage(removedMessage))
+            piece += getMediaMessage(removedMessage)
 
-        piece.push('')
-
-        dirtyDiscordMessage.push(...piece)
+        discordMessage += piece
     }
 
-    return discordMessage.concat([dirtyDiscordMessage])
+    return discordMessage
 }
 
 function getMediaMessage(message) {
-    const mediaMessage = []
+    let mediaMessage = ''
 
     for (const item of message.media) {
         const url = formatMediaURL(message.discord_channel_id, message.discord_message_id, item.name, item.type)
 
         // TODO(ben): have emoji dependant on media type
-        mediaMessage.push(`     :${message.content ? 'frame_photo' : 'white_small_square'}: <${url}>`)
+        mediaMessage += `     \n:${message.content ? 'frame_photo' : 'white_small_square'}: <${url}>`
     }
 
     return mediaMessage
@@ -199,8 +167,4 @@ async function getUserName(discordID) {
     catch (ignored) {
         return 'unknown'
     }
-}
-
-function lengthOfAllArrayElements(array) {
-    return array.reduce((size, currentValue) => size + currentValue.length, 0)
 }
