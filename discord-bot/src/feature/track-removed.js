@@ -25,7 +25,7 @@ client.on('messageDelete', async message => {
         discordGuildID: message.guild.id,
         sentByDiscordID: author.id,
         sentAt: message.createdAt.getTime() / 1000,
-        removedAt: Date.now()
+        removedAt: Date.now() / 1000
     }
 
     const mediaURLs = [], { attachments } = message

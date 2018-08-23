@@ -36,7 +36,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
         const client = await captureClient()
 
         try {
-            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.discord_guild_id = $1 AND message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`, [guildID])
+            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.discord_guild_id = $1 AND message.removed_at < to_timestamp($2) GROUP BY message.id ORDER BY message.removed_at DESC LIMIT $3;`, [guildID, before, limit])
 
             context.body = {
                 success: true,
