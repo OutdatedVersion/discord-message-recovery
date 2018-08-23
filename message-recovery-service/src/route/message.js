@@ -29,19 +29,14 @@ export default class MessageRoute extends CRUDRouteDefinition {
     }
 
     async get(context) {
-        const guildID = parseInt(context.params.guildID)
+        const guildID = context.params.guildID
         const limit = Math.min(50, context.query.limit) || 50
         const before = parseInt(context.query.before) || Date.now()
-
-        if (isNaN(guildID)) {
-            context.body = Boom.badRequest('Malformed Discord guild ID')
-            return
-        }
 
         const client = await captureClient()
 
         try {
-            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.discord_guild_id = ${guildID} AND message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`)
+            const { rows } = await client.query(`SELECT message.*, json_agg(json_build_object('name', message_media.name, 'type', message_media.type)) AS media FROM message LEFT JOIN message_media ON message.id = message_media.message_id WHERE message.discord_guild_id = $1 AND message.removed_at < to_timestamp(${before}) GROUP BY message.id LIMIT ${limit};`, [guildID])
 
             context.body = {
                 success: true,
@@ -61,7 +56,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
     // TODO(ben): At the moment if this fails everything is lost; there needs to be a requeue system of some sort
 
     async post(context) {
-        const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'discordGuildID', 'sentByDiscordID', 'sentAt', 'removedAt', 'media?')
+        const data = context.fromBody('content', 'discordChannelID', 'discordMessageID', 'sentByDiscordID', 'sentAt', 'removedAt', 'media?')
 
         // TODO(ben): Bake body validation into fromBody
         if (data.media && !Array.isArray(data.media)) {
@@ -80,7 +75,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
 
             const result = await client.query(
                 'INSERT INTO message (discord_guild_id, discord_channel_id, discord_message_id, sent_by_discord_id, content, sent_at, removed_at) VALUES ($1, $2, $3, $4, $5, to_timestamp($6), to_timestamp($7)) RETURNING id;',
-                [data.discordGuildID, data.discordChannelID, data.discordMessageID, data.sentByDiscordID, data.content, data.sentAt, data.removedAt]
+                [context.params.guildID, data.discordChannelID, data.discordMessageID, data.sentByDiscordID, data.content, data.sentAt, data.removedAt]
             )
 
             const { id } = result.rows[0]
@@ -96,7 +91,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
                         // Upload media to Minio instance
                         
                         try {
-                            await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
+                            // await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
 
                             sql += `${parameters.length == 0 ? '' : ', '}($${index++}, $${index++}, $${index++})`
                             parameters.push(id, meta.name, meta.extension)
