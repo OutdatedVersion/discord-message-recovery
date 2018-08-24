@@ -19,7 +19,6 @@ const BUCKET_NAME = 'message-recovery-media'
 
 // TODO(ben): handle errors in every stage of media upload process
 // TODO(ben): create system to normalize responses
-// TODO(ben): update discord bot to to use this service
 // TODO(ben): setup kubernetes deployments for both the discord bot and this; the gateway needs to serve minio stuff too
 
 export default class MessageRoute extends CRUDRouteDefinition {
@@ -91,7 +90,7 @@ export default class MessageRoute extends CRUDRouteDefinition {
                         // Upload media to Minio instance
                         
                         try {
-                            // await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
+                            await uploadRemoteFile(url, `${data.discordChannelID}/${data.discordMessageID}/${meta.full}`)
 
                             sql += `${parameters.length == 0 ? '' : ', '}($${index++}, $${index++}, $${index++})`
                             parameters.push(id, meta.name, meta.extension)
