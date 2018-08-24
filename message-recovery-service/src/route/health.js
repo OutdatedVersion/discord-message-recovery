@@ -1,8 +1,10 @@
 import { RouteDefinition } from '@kratos/routing'
 import { captureClient } from "../database/postgres"
-import log from '@kratos/logging'
+import { createLogger } from '@kratos/logging'
 import minio from "../database/minio"
 import isReady from "../ready"
+
+const log = createLogger('Health')
 
 export class HealthRoute extends RouteDefinition {
     constructor() {
@@ -19,6 +21,8 @@ export class HealthRoute extends RouteDefinition {
             context.status = 200
         }
         catch (error) {
+            log.error(error.stack)
+            
             context.status = 500
         }
         finally {
