@@ -1,11 +1,7 @@
 import bugsnag from 'bugsnag'
 import { bugsnag as token } from '../config'
 import log from '@kratos/logging'
-
-// setup client
-bugsnag.register(token)
-
-log.info('setup bugsnag reporting')
+import reportError from '@kratos/error'
 
 /**
  * Let Bugsnag know of the provided error, and log it locally.
@@ -13,10 +9,9 @@ log.info('setup bugsnag reporting')
  * @param {Error} error The error
  */
 export default function handleError(error) {
-    bugsnag.notify(error)
-    log.error(error)
+    reportError(error)
+    log.error(error.stack)
 }
 
-
-for (let event of ['uncaughtException', 'unhandledRejection'])
+for (const event of ['uncaughtException', 'unhandledRejection'])
     process.on(event, handleError)

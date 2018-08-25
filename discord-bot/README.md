@@ -1,0 +1,2 @@
+kubernetes secrets:  
+`discord`: `token=...`

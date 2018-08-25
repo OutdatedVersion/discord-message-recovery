@@ -13,4 +13,6 @@ RUN ["yarn", "install", "--registry", "https://npm-registry.outdatedversion.com"
 # copy code over
 COPY build/ ./build
 
-CMD [ "yarn", "prod" ]
+ENV NODE_ENV prod
+
+CMD [ "node", "build/index.js" ]

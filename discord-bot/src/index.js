@@ -1,30 +1,34 @@
 import client from './discord'
-import log, { updateLoggingLevel } from '@kratos/logging'
-import { token } from '../config'
 import { setupHandler } from './command'
 import { setup } from './feature'
-import error from './error'
+import { writeFileSync } from 'fs'
+import { registerClient } from '@kratos/error'
 
-// dev
-updateLoggingLevel('debug')
+async function start() {
+    // Setup error reporting
+    registerClient(process.env.BUGSNAG_TOKEN)
+    
+    // Setup command handling
+    setupHandler(client)
 
-// setup command system
-setupHandler(client)
-setup(client)
+    // Setup feature set
+    setup(client)
 
-client.login(token)
+    // Login..
+    const token = process.env.DISCORD_TOKEN
 
+    if (!token)
+        throw new Error('Missing Discord token')
 
-function cleanup() {
-    // notify every part of the app
-    process.emit('cleanup')
-
-    client.destroy().then(() => 
-    {
-        log.info('logged out')
-        process.exit(0)
-    })
+    client.login(token)
 }
 
-for (let event of ['SIGTERM', 'SIGINT'])
-    process.on(event, cleanup)
+start().then(writeProbeFiles).catch(error => {
+    console.error('Failed to start\n', error.stack)
+    process.exit(-1)
+})
+
+function writeProbeFiles() {
+    writeFileSync('/tmp/ready', '')
+    writeFileSync('/tmp/health', '')
+}

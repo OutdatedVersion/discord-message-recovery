@@ -2,11 +2,11 @@
 
 set -e
 
+REGISTRY_URL="gcr.io/$(gcloud config get-value project -q)"
 VERSION_FILE="build/version.json"
 
 version=$(git log -1 --format='format:%H' HEAD -- $PWD | head -c 8)
-imageName="kratos/discord-bot:$version"
-registryURL="docker-registry.outdatedversion.com"
+imageName="discord-bot:$version"
 
 echo "Version: $version"
 
@@ -16,6 +16,7 @@ yarn build
 echo "{\"version\": \"$version\"}" > $VERSION_FILE
 
 echo "Building Image"
-sudo docker build -t $imageName .
-sudo docker tag $imageName $registryURL/$imageName
-sudo docker push $registryURL/$imageName
+sudo docker build -t $REGISTRY_URL/$imageName .
+sudo docker push $REGISTRY_URL/$imageName
+
+echo "Pushed $imageName to $REGISTRY_URL"

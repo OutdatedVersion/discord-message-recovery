@@ -8,6 +8,7 @@
     "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node build/index.js"
   },
   "dependencies": {
+    "@kratos/error": "^1.0.2",
     "@kratos/logging": "^1.0.1",
     "bugsnag": "^2.0.1",
     "chalk": "^2.1.0",

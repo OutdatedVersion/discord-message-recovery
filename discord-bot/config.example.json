@@ -1,9 +1,0 @@
-{
-    "token": "discord token",
-    "command": {
-        "prefix": "-"
-    },
-    "games": [
-        "stuff"
-    ]
-}

@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@kratos/error@^1.0.1":
+  version "1.0.2"
+  resolved "https://npm-registry.outdatedversion.com/@kratos%2ferror/-/error-1.0.2.tgz#ebdf1e5ddc86e2c4bd4481dcc7637047150a1f9a"
+
 "@kratos/logging@^1.0.1":
   version "1.0.1"
   resolved "https://npm-registry.outdatedversion.com/@kratos%2flogging/-/logging-1.0.1.tgz#072e55eafdfc44668747cf7f89363babf7024424"

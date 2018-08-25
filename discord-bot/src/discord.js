@@ -1,23 +1,39 @@
 import Discord from 'discord.js'
 import log from '@kratos/logging'
-import { games } from '../config'
 import { setInterval } from 'timers'
 
 const client = new Discord.Client()
 
+/**
+ * How often the Discord bot's status updates.
+ * Default: 10 minutes
+ */
+const GAME_UPDATE_INTERVAL = 600000
+
+/**
+ * All of the possible Discord bot's statuses.
+ */
+const GAMES = [
+    'node.js',
+    'GKE',
+    'kubernetes',
+    'git',
+    'microservices',
+    'rest'
+]
+
+
 client.on('ready', () => {
     setRandomGame()
-    setInterval(setRandomGame, 600000) // every 10 mins
+    setInterval(setRandomGame, GAME_UPDATE_INTERVAL)
 
     log.info(`ready at ${client.user.tag}`)
 })
 
 function setRandomGame() {
-    const game = games[Math.floor(Math.random() * games.length)]
+    const game = GAMES[Math.floor(Math.random() * GAMES.length)]
 
     client.user.setGame(game)
-
-    log.info(`updated game to '${game}'`)
 }
 
 export default client

@@ -1,13 +1,10 @@
 import { Command } from '.'
 import { execSync } from 'child_process'
+import version from '../version'
 
 export default new Command(
     ['v', 'version', 'information', 'info'],
     async (message, args) => {
-        message.reply(`**kratos**\nRunning on container: ${containerID()}`)
+        await message.reply(`**Kratos** (v${version})\n\nHey, did you know that Kratos is open-source? https://github.com/OutdatedVersion/kratos (:`)
     }
 )
-
-function containerID() {
-    return execSync(`awk -F/ '{ print $NF }' /proc/1/cpuset`).toString().trim().substring(0, 12)
-}

@@ -1,9 +1,11 @@
-import Files from 'fs'
-import Path from 'path'
 import log from '@kratos/logging'
-import { command as config } from '../../config'
 import { traverseDirectory } from '../utility/folder'
 import { setTimeout } from 'timers'
+
+/**
+ * The character that commands start with.
+ */
+const PREFIX = '-'
 
 /**
  * Represenation of a message based command.
@@ -39,8 +41,8 @@ export function registerCommand(command) {
  * @param {string} executor The executor
  */
 export function hasCommand(executor) {
-    if (executor.startsWith(config.prefix))
-        executor = executor.substring(config.prefix.length)
+    if (executor.startsWith(PREFIX))
+        executor = executor.substring(PREFIX.length)
 
     if (executor.indexOf(' ') > -1)
         executor = executor.substring(0, executor.indexOf(' '))
@@ -59,7 +61,7 @@ export function setupHandler(client) {
     client.on('message', message => {
         const split = message.content.split(' ')
     
-        if (split && split[0].startsWith(config.prefix)) {
+        if (split && split[0].startsWith(PREFIX)) {
             const executor = split[0].substring(1).toLowerCase()
             const command = registeredCommands.get(executor)
             
