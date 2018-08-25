@@ -1,8 +1,0 @@
-# I only intend to be running this on a Minikube based cluster, so this is alright
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: local-ssd
-provisioner: k8s.io/minikube-hostpath
-parameters:
-  type: pd-ssd

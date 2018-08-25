@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web-ui
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  labels:
+    release: prod
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+    # traefik.ingress.kubernetes.io/redirect-regex: ^https://kratos.outdatedversion.com/
+    # traefik.ingress.kubernetes.io/redirect-replacement: https://github.com/OutdatedVersion/kratos
+spec:
+  rules:
+  - host: kratos.outdatedversion.com
+    http:
+      paths:
+      - path: /storage
+        backend:
+          serviceName: minio-balancer
+          servicePort: 9000
+  tls:
+   - secretName: tls-outdatedversion-com-wildcard
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-dashboard-ingress
+  labels:
+    release: prod
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+    ingress.kubernetes.io/auth-type: "basic"
+    ingress.kubernetes.io/auth-secret: "traefik-dashboard-auth"
+spec:
+  rules:
+  - host: kratos.outdatedversion.com
+    http:
+      paths:
+      - path: /traefik
+        backend:
+          serviceName: traefik-web-ui
+          servicePort: 80
+  tls:
+   - secretName: tls-outdatedversion-com-wildcard

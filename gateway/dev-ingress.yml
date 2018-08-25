@@ -27,7 +27,7 @@ spec:
           servicePort: 80
       - path: /storage
         backend:
-          serviceName: minio-public
+          serviceName: minio-balancer
           servicePort: 9000
       - path: /api/message-recovery
         backend:

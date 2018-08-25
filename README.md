@@ -5,5 +5,5 @@ host requirements:
 
 global kubernetes secrets:
 
-`kratos-bugsnag`: `token=683568b765e8a637fa38e04ec681ce6a` (in a real env this should be broken down per-service, but i'm gonna throw it all at one bugsnag app for our purposes)
+`bugsnag`: `kratos=683568b765e8a637fa38e04ec681ce6a` (in a real env this should be broken down per-service, but i'm gonna throw it all at one bugsnag app for our purposes)
 `minio`: `access=...` `secret=...`
