@@ -36,14 +36,19 @@ spec:
         service: message-recovery
         tier: api
     spec:
-      imagePullSecrets:
-          - name: outdatedversion-private-registry
       containers:
         - name: api
-          image: docker-registry.outdatedversion.com/kratos/message-recovery-service:a8306b8a
+          image: gcr.io/kratos-201621/message-recovery-service:b9bf1b65
           ports:
             - containerPort: 2000
               name: http
+          resources:
+            limits:
+              cpu: "100m"
+              memory: 100M
+            requests:
+              cpu: "10m"
+              memory: 50M
           env:
             - name: BUGSNAG_TOKEN
               valueFrom:
@@ -59,10 +64,10 @@ spec:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: message-recovery-service-postgres-password
+                  name: message-recovery-service-postgres
                   key: password
             - name: MINIO_HOST
-              value: minio-public
+              value: minio-balancer
             - name: MINIO_PORT
               value: "9000"
             - name: MINIO_ACCESS_KEY
@@ -83,11 +88,11 @@ spec:
             httpGet:
               path: /_ready
               port: 2000
-            initialDelaySeconds: 5
-            periodSeconds: 3
+            initialDelaySeconds: 2
+            periodSeconds: 1
           livenessProbe:
             httpGet:
               path: /_health
               port: 2000
-            periodSeconds: 1
-            initialDelaySeconds: 1
+            periodSeconds: 4
+            initialDelaySeconds: 5

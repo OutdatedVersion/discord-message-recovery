@@ -52,29 +52,28 @@ spec:
         resources:
           limits:
             cpu: "500m"
-            memory: 1Gi
+            memory: 500M
           requests:
-           cpu: "500m"
-           memory: 1Gi
+            cpu: "50m"
+            memory: 200M
         env:
           - name: POSTGRES_USER
             value: "message-recovery"
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: message-recovery-service-postgres-password
+                name: message-recovery-service-postgres
                 key: password
           - name: PGDATA
-            value: "/postgres"
+            value: "/postgres/data"
         volumeMounts:
-        - name: postgres-data
+        - name: message-recovery-postgres-data
           mountPath: /postgres
   volumeClaimTemplates:
   - metadata:
-      name: postgres-data
+      name: message-recovery-postgres-data
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: local-ssd
       resources:
         requests:
           storage: 1Gi
