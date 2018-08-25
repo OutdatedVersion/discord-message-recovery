@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: bot
-          image: gcr.io/kratos-201621/discord-bot:hash
+          image: gcr.io/kratos-201621/discord-bot:12b23537
           resources:
             limits:
               cpu: "100m"
