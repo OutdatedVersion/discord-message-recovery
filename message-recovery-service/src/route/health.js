@@ -22,12 +22,14 @@ export class HealthRoute extends RouteDefinition {
         }
         catch (error) {
             log.error(error.stack)
-            
+
             context.status = 500
         }
         finally {
             client.release()
         }
+
+        log.info(`received health probe, ${context.status}`)
     }
 }
 
