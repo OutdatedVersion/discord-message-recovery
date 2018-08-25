@@ -8,8 +8,7 @@ import makeRequest, { Service } from '../request';
 /**
  * A URL template at which media from messages may be found.
  */
-// const STORAGE_URL_BASE = 'https://kratos.outdatedversion.com/storage/message-recovery-media'
-const STORAGE_URL_BASE = 'http://kratos.local.dev.outdatedversion.com/storage/message-recovery-media'
+const STORAGE_URL_BASE = 'https://kratos.outdatedversion.com/storage/message-recovery-media'
 
 client.on('messageDelete', async message => {
     const { cleanContent, channel, author } = message
