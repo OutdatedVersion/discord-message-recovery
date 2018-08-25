@@ -1,6 +1,7 @@
 import Discord from 'discord.js'
 import log from '@kratos/logging'
 import { setInterval } from 'timers'
+import exitHook from 'async-exit-hook'
 
 const client = new Discord.Client()
 
@@ -29,6 +30,8 @@ client.on('ready', () => {
 
     log.info(`ready at ${client.user.tag}`)
 })
+
+exitHook(done => client.destroy().then(done))
 
 function setRandomGame() {
     const game = GAMES[Math.floor(Math.random() * GAMES.length)]
