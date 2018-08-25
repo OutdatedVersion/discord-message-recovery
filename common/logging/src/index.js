@@ -23,14 +23,21 @@ function formattedDate() {
     return format(new Date(), 'MMM/D h:mm:ssa')
 }
 
+let config = {
+    name: 'Main'
+}
+
+if (process.env.NODE_ENV !== 'prod') {
+    config = Object.assign(config, { 
+        prettyPrint: true,
+        prettifier: options => {
+            return data => `${formattedLevels[data.level]} ${chalk.gray(formattedDate())} ${chalk.magenta(data.name)} ${chalk.white('::')} ${data.msg}\n`
+        }
+    })
+}
+
 // create our primary logger
-const parent = pino({
-    name: 'Main',
-    prettyPrint: true,
-    prettifier: options => {
-        return data => `${formattedLevels[data.level]} ${chalk.gray(formattedDate())} ${chalk.magenta(data.name)} ${chalk.white('::')} ${data.msg}\n`
-    }
-})
+const parent = pino(config)
 
 export default parent
 export const rename = newName => parent.name = newName
