@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@kratos/error": "^1.0.1",
-    "@kratos/logging": "^1.0.1",
+    "@kratos/logging": "^1.0.3",
     "@kratos/routing": "^1.0.1",
     "boom": "^7.2.0",
     "koa": "^2.5.2",
