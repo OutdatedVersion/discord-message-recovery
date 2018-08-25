@@ -19,4 +19,6 @@ COPY build/ ./build
 # we'll need this port
 EXPOSE 2000
 
-CMD [ "yarn", "prod" ]
+ENV NODE_ENV prod
+
+CMD [ "node", "build/index.js" ]

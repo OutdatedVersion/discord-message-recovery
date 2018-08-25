@@ -12,6 +12,8 @@ export class HealthRoute extends RouteDefinition {
     }
 
     async handle(context) {
+        console.log('??')
+        
         const client = await captureClient()
 
         try {
