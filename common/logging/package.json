@@ -1,6 +1,6 @@
 {
   "name": "@kratos/logging",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "build/index.js",
   "dependencies": {
     "bugsnag": "^2.4.3",
