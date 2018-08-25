@@ -4,8 +4,7 @@ As an exercise in pursuit of further familiarizing myself with some cool technol
 
 ## Stack
 - [Docker](https://docker.com)
-- [Kubernetes](https://kubernetes.io)
-- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
+- [Kubernetes](https://kubernetes.io) via [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
 - [Minio](https://minio.io)
 - [Node.js](https://nodejs.org)
 - [Postgres](https://www.postgresql.org)
