@@ -22,7 +22,7 @@ export class HealthRoute extends RouteDefinition {
             context.status = 200
         }
         catch (error) {
-            log.error(error.stack)
+            log.error('health probe failed', error.stack)
 
             context.body = `error: ${error.name}`
             context.status = 500
@@ -31,7 +31,7 @@ export class HealthRoute extends RouteDefinition {
             client.release()
         }
 
-        log.info(`received health probe, ${context.status}`)
+        // log.info(`received health probe, ${context.status}`)
     }
 }
 
@@ -41,9 +41,12 @@ export class ReadyRoute extends RouteDefinition {
     }
 
     async handle(context) {
-        context.body = isReady() ? 'ready' : 'not ready'
-        context.status = isReady() ? 200 : 500
+        const ready = isReady()
 
-        log.info(`received ready probe, response: ${context.status}`)
+        context.body = ready ? 'ready' : 'not ready'
+        context.status = ready ? 200 : 500
+
+        if (!ready)
+            log.info(`received ready probe, not yet ready`)
     }
 }
