@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: gcr.io/kratos-201621/message-recovery-service:b9bf1b65
+          image: gcr.io/kratos-201621/message-recovery-service:c12eb444
           ports:
             - containerPort: 2000
               name: http
