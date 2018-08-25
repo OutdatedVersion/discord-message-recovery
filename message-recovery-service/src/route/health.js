@@ -18,11 +18,13 @@ export class HealthRoute extends RouteDefinition {
             await client.query('SELECT 1')
             await minio.listBuckets()
 
+            context.body = 'ok'
             context.status = 200
         }
         catch (error) {
             log.error(error.stack)
 
+            context.body = `error: ${error.name}`
             context.status = 500
         }
         finally {
@@ -39,6 +41,7 @@ export class ReadyRoute extends RouteDefinition {
     }
 
     async handle(context) {
+        context.body = isReady() ? 'ready' : 'not ready'
         context.status = isReady() ? 200 : 500
 
         log.info(`received ready probe, response: ${context.status}`)
