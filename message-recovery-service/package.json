@@ -5,7 +5,7 @@
   "scripts": {
     "build": "babel src -d build",
     "prod": "node build/index.js",
-    "dev": "export NODE_ENV=dev && export BUGSNAG_TOKEN=683568b765e8a637fa38e04ec681ce6a && export PGDATABASE=kratos_message_recovery && export PGUSER=kratos_dev && export PGPASSWORD=dev && export MINIO_HOST=localhost && export MINIO_PORT=9000 && export MINIO_ACCESS_KEY=minio && MINIO_SECRET_KEY=minio123 && nodemon -q -w src -x 'babel-node src/index.js'"
+    "dev": "export NODE_ENV=dev && export BUGSNAG_TOKEN=683568b765e8a637fa38e04ec681ce6a && export PGDATABASE=kratos_message_recovery && export PGUSER=kratos_dev && export PGPASSWORD=dev && export MINIO_HOST=localhost && export MINIO_PORT=9000 && export MINIO_ACCESS_KEY=minio && export MINIO_SECRET_KEY=minio123 && nodemon -q -w src -x 'babel-node src/index.js'"
   },
   "dependencies": {
     "@kratos/error": "^1.0.1",
