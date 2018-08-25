@@ -32,7 +32,7 @@ const StatusToError = {
  * @param {string} token Authorization token to use with the API
  * @param {object} options Additional configuration points for the client
  */
-export function registerClient(token, options) {
+export function registerClient(token, options = { }) {
     if (!token) {
         throw new Error('You must provide a token')
     }
