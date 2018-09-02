@@ -15,11 +15,14 @@
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "mime-types": "^2.1.19",
     "minio": "^7.0.0",
     "pg": "^7.4.3",
     "postgres-response-codes": "^1.0.1",
+    "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
+    "typeorm": "^0.2.7",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

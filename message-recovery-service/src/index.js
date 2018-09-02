@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import Koa from 'koa'
 import BodyParser from 'koa-bodyparser'
 import log, { createLogger } from '@kratos/logging'
