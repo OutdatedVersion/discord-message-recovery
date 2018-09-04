@@ -1,0 +1,31 @@
+{
+   "name": "message-recovery-service",
+   "version": "0.0.1",
+   "devDependencies": {
+      "@types/http-errors": "^1.6.1",
+      "@types/koa": "^2.0.46",
+      "@types/koa-bodyparser": "^5.0.1",
+      "@types/koa-router": "^7.0.31",
+      "@types/minio": "^6.0.2",
+      "@types/node": "^8.0.29",
+      "ts-node": "^7.0.1",
+      "tslib": "^1.9.3",
+      "typescript": "^3.0.3"
+   },
+   "dependencies": {
+      "bugsnag": "^2.4.3",
+      "koa": "^2.5.2",
+      "koa-bodyparser": "^4.2.1",
+      "koa-router": "^7.4.0",
+      "minio": "^7.0.0",
+      "pg": "^7.3.0",
+      "reflect-metadata": "^0.1.10",
+      "simple-get-stream": "^1.0.2",
+      "typeorm": "0.2.7"
+   },
+   "scripts": {
+      "start": "node build/index.js",
+      "build": "tsc",
+      "dev": "ts-node --project tsconfig.json --inspect=6000 -r ts-node/register src/index.ts"
+   }
+}
