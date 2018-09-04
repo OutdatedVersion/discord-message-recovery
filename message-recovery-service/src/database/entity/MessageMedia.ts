@@ -13,10 +13,8 @@ export default class MessageMedia {
     @Column ('text')
     fileType: string
 
-    @Column ({
-        nullable: true
-    })
-    duplicateNumber: number
+    @Column ()
+    uploadIndex: number
 
     @ManyToOne (type => Message, message => message.media)
     message: Message
