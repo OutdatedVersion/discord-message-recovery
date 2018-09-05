@@ -1,5 +1,6 @@
 import Router from 'koa-router'
-import { fetchMessagesForGuild, createMessage } from '../service/message'
+import { fetchMessagesByGuild, createMessage } from '../service/message'
+import { attatchMediaToMessage, fetchMedia } from '../service/media';
 
 const MESSAGE_POST_REQUIRED_KEYS = ['discordChannelID', 'discordMessageID', 'sentByDiscordID', 'content', 'sentAt', 'removedAt']
 
@@ -18,7 +19,7 @@ router.use('/:guildID/*', async (context, next) => {
 router.get('/:guildID/messages', async context => {
     const { guildID } = context.params
     
-    const messages = await fetchMessagesForGuild(guildID)
+    const messages = await fetchMessagesByGuild(guildID)
 
     context.body = messages
 })
@@ -36,6 +37,38 @@ router.post('/:guildID/messages', async context => {
     const id = await createMessage(body)
 
     context.body = { id }
+})
+
+// Sub-resource: media
+router.use('/:guildID/messages/:messageID/*', async (context, next) => {
+    const { messageID } = context.params
+
+    if (!messageID.match(/\d/g)) {
+        context.throw(400, 'Invalid messageID parameter')
+    }
+
+    await next()
+})
+
+router.get('/:guildID/messages/:messageID/media', async context => {
+    const { messageID } = context.params
+
+    const result = await fetchMedia(messageID)
+
+    context.body = result
+})
+
+router.post('/:guildID/messages/:id/media', async context => {
+    const { messageID } = context.params
+    const body = <any> context.request.body
+
+    if (!body.media || !body.media.length) {
+        context.throw(400, 'Malformed body; Missing/empty member: media')
+    }
+    
+    const result = await attatchMediaToMessage(messageID, body.media)
+
+    context.body = result
 })
 
 export default router

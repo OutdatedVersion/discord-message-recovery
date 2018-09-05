@@ -1,0 +1,24 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "kratos_dev",
+   "password": "dev",
+   "database": "kratos_message_recovery",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "build/database/entity/*.js"
+   ],
+   "migrations": [
+      "build/database/migration/*.js"
+   ],
+   "subscribers": [
+      "build/database/subscriber/*.js"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}

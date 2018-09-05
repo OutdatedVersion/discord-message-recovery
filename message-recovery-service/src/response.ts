@@ -10,13 +10,6 @@ import createError, { HttpError } from 'http-errors'
 const ERROR_INTERNAL = createError(500, `We're not sure what happened`)
 
 /**
- * Sent to the client when we have no route matching their request.
- * 
- * @see https://httpstatuses.com/404
- */
-const ERROR_NOT_FOUND = createError(404, `We have no resource there`)
-
-/**
  * Normalize responses that indicate a failed request.
  * 
  * @param error Source error
@@ -36,7 +29,7 @@ function transferErrorToContext(error: HttpError, context: Context) {
 /**
  * Sits in front of all requests and catches any errors that are 
  * bubbling back up to Koa. We also normalize responses so that
- * the client is guarenteed a similar result every request.
+ * the client is guaranteed a similar result every request.
  * 
  * @param context 
  * @param next 
