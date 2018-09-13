@@ -55,12 +55,20 @@ spec:
                 secretKeyRef:
                   name: kratos-bugsnag
                   key: token
-            - name: PGHOST
-              value: message-recovery-postgres
-            - name: PGDATABASE
+            - name: TYPEORM_CONNECTION
+              value: postgres
+            - name: TYPEORM_HOST
+              value: localhost
+            - name: TYPEORM_USERNAME
               value: message-recovery
-            - name: PGUSER
-              value: message-recovery
+            - name: TYPEORM_PORT
+              value: "5432"
+            - name: TYPEORM_ENTITIES
+              value: build/database/entity/*.js
+            - name: TYPEORM_MIGRATIONS
+              value: build/database/migration/*.js
+            - name: TYPEORM_SUBSCRIBERS
+              value: build/database/subscriber/*.js
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:

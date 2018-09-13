@@ -8,10 +8,7 @@ WORKDIR /usr/app
 COPY package.json yarn.lock ./
 
 # get the required modules in place
-RUN ["yarn", "install", "--registry", "https://npm-registry.outdatedversion.com"]
-
-# copy SQL files over
-COPY sql/ ./sql
+RUN ["yarn", "install", "--production", "--registry", "https://npm-registry.outdatedversion.com"]
 
 # copy code over
 COPY build/ ./build

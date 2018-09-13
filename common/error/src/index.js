@@ -3,7 +3,7 @@ import bugsnag from 'bugsnag'
 /**
  * Relation of status code to an error creation handle.
  */
-const StatusToError = {
+export const StatusToError = {
     404(context) {
         return {
             statusCode: 404,

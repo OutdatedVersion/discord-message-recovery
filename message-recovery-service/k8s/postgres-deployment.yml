@@ -1,3 +1,6 @@
+# For the current deployment setup, we'll go ahead and do this in cluster & per-service.
+# Though an out of cluster datastore is also an option.
+
 apiVersion: v1
 kind: Service
 metadata:
