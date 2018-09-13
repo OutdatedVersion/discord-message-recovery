@@ -1,4 +1,5 @@
-import Router, { IMiddleware } from 'koa-router'
+import Router from 'koa-router'
+import HealthRouter from './controller/health'
 import MessageRouter from './controller/message'
 
 class RouteDefinition {
@@ -6,5 +7,6 @@ class RouteDefinition {
 }
 
 export default [
+    new RouteDefinition('/', HealthRouter),
     new RouteDefinition('/guild', MessageRouter)
 ]
