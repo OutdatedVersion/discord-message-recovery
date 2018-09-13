@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-recovery-api
+  labels:
+    app: kratos
+    service: message-recovery
+    tier: api
+spec:
+  selector:
+    app: kratos
+    service: message-recovery
+    tier: api
+  ports:
+    - port: 80
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-recovery-api
+  labels:
+    app: kratos
+    service: message-recovery
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kratos
+      service: message-recovery
+  template:
+    metadata:
+      name: message-recovery-api
+      labels:
+        app: kratos
+        service: message-recovery
+        tier: api
+    spec:
+      containers:
+        - name: api
+          image: gcr.io/kratos-201621/message-recovery-service:c12eb444
+          ports:
+            - containerPort: 2000
+              name: http
+          resources:
+            limits:
+              cpu: "100m"
+              memory: 100M
+            requests:
+              cpu: "10m"
+              memory: 50M
+          env:
+            - name: BUGSNAG_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: kratos-bugsnag
+                  key: token
+            - name: TYPEORM_CONNECTION
+              value: postgres
+            - name: TYPEORM_HOST
+              value: localhost
+            - name: TYPEORM_USERNAME
+              value: message-recovery
+            - name: TYPEORM_PORT
+              value: "5432"
+            - name: TYPEORM_ENTITIES
+              value: build/database/entity/*.js
+            - name: TYPEORM_MIGRATIONS
+              value: build/database/migration/*.js
+            - name: TYPEORM_SUBSCRIBERS
+              value: build/database/subscriber/*.js
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: message-recovery-service-postgres
+                  key: password
+            - name: MINIO_HOST
+              value: minio-balancer
+            - name: MINIO_PORT
+              value: "9000"
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: access
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: secret
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          readinessProbe:
+            httpGet:
+              path: /_ready
+              port: 2000
+            initialDelaySeconds: 2
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: 2000
+            periodSeconds: 4
+            initialDelaySeconds: 5
