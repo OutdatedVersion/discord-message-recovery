@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import { fetchMessagesByGuild, createMessage } from '../service/message'
-import { attatchMediaToMessage, fetchMedia } from '../service/media';
+import { attatchMediaToMessage, fetchMedia } from '../service/media'
+import { BadRequest } from 'http-errors'
 
 const MESSAGE_POST_REQUIRED_KEYS = ['discordChannelID', 'discordMessageID', 'sentByDiscordID', 'content', 'sentAt', 'removedAt']
 
@@ -18,8 +19,17 @@ router.use('/:guildID/*', async (context, next) => {
 
 router.get('/:guildID/messages', async context => {
     const { guildID } = context.params
+    let { limit, before } = context.query
     
-    const messages = await fetchMessagesByGuild(guildID)
+    if (limit && limit.match(/[^\d]/)) {
+        throw new BadRequest(`Malformed query parameter: 'limit' must be a number`)
+    }
+
+    if (before && before.match(/[^\d]/)) {
+        throw new BadRequest(`Malformed query parameter: 'before' should be UNIX time`)
+    }
+
+    const messages = await fetchMessagesByGuild(guildID, limit, before)
 
     context.body = messages
 })
