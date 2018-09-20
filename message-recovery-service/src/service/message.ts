@@ -53,7 +53,7 @@ export function fetchMessagesByGuild(guildID: string, limit: number = 50, before
                             .limit(limit)
 
     if (before !== undefined) {
-        query.andWhere('message.removed_at < to_timestamp(:before)', { before })
+        query.andWhere('message.removedAt < to_timestamp(:before)', { before })
     }
 
     return query.getMany()
