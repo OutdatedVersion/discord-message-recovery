@@ -48,6 +48,9 @@ export function fetchMessageByID(messageID: number): Promise<Message> {
 export function fetchMessagesByGuild(guildID: string, limit: number = 50, before?: number): Promise<Message[]> {
     const repository = getRepository(Message)
 
+    // Limit the limit (haha)
+    limit = Math.min(limit, 50)
+
     const query = repository.createQueryBuilder('message')
                             .where('message.discordGuildID = :guildID', { guildID })
                             .limit(limit)
