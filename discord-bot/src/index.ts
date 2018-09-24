@@ -1,4 +1,5 @@
 import discordClient from './discord'
+import { registerCommandHandler } from './command'
 
 async function start() {
     // Fail fast, we'll need this to start no matter what
@@ -7,6 +8,8 @@ async function start() {
     if (!token) {
         throw new Error('Missing Discord token')
     }
+
+    registerCommandHandler()
 
     discordClient.login(token)
 }
