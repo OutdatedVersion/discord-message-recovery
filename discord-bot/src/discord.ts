@@ -32,7 +32,7 @@ exitHook((done: any) => client.destroy().then(done))
 function setRandomGame() {
     const game = GAMES[Math.floor(Math.random() * GAMES.length)]
 
-    client.user.setGame(game)
+    client.user.setActivity(game)
 }
 
 export default client
