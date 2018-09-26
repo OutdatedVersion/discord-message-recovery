@@ -1,8 +1,8 @@
 import { setTimeout } from 'timers'
-import { Message, Client } from 'discord.js'
+import { Message } from 'discord.js'
 import discordClient from '../discord'
 
-type CommandHandler = (message: Message) => void
+type CommandHandler = (message: Message, args: string[]) => Promise<void>
 
 declare module "discord.js" {
     export interface Message {
@@ -57,10 +57,11 @@ export function hasCommand(executor: string) {
     return registeredCommands.has(executor.toLowerCase())
 }
 
-/**
- * Begin parsing commands from messages.
- */
-export function registerCommandHandler() {
+
+// Begin processing commands
+// We'll go ahead and do this when this module loads up
+
+export function listenForCommands() {
     discordClient.on('message', message => {
         const split = message.content.split(' ')
     
@@ -84,10 +85,10 @@ export function registerCommandHandler() {
                     }, 5000)
                 })
             }
-
+    
             if (command) {
                 message.timedReply = timedReply
-
+    
                 command(message, split.splice(1))
             }
             else timedReply('i have no command matching that..')
