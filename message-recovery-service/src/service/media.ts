@@ -36,7 +36,7 @@ export async function fetchMedia(removedMessageID: number): Promise<MessageMedia
     if (!parentMessage) {
         throw new NoSuchMessageError()
     }
-    
+
     const repository = getRepository(MessageMedia)
 
     return repository.find({ message: { id: removedMessageID } })
@@ -71,7 +71,7 @@ export async function attatchMediaToMessage(removedMessageID: number, mediaAddre
             fileExtension: info.extension
         }
     })
-    
+
     // All files will be uploaded in parallel
     const uploadResults = await Promise.all(parsed.map(uploadRemoteMedia))
 
@@ -88,6 +88,15 @@ export async function attatchMediaToMessage(removedMessageID: number, mediaAddre
 
             entities.push(entity)
         }
+    }
+
+    if (!entities.length) {
+        // TODO(ben): Consider our options here...
+        // - Explicit error letting us know everything failed?
+        // - Just return an empty array?
+        // - Return the goto mapped values w/ empty etag?
+
+        return 
     }
 
     const repository = getRepository(MessageMedia)
