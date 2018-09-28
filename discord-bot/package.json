@@ -1,0 +1,22 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/got": "^8.3.4",
+    "@types/node": "^10.10.3",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "async-exit-hook": "^2.0.1",
+    "discord.js": "^11.4.2",
+    "got": "^9.2.2"
+  }
+}
