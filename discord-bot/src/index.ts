@@ -11,6 +11,8 @@ async function start() {
 
     listenForCommands()
 
+    require('./message-recovery')
+
     discordClient.login(token)
 }
 
