@@ -35,6 +35,7 @@ router.get('/:guildID/messages', async context => {
 })
 
 router.post('/:guildID/messages', async context => {
+    const { guildID } = context.params
     const body = <any> context.request.body
     
     // We'll go ahead and validate the request body here
@@ -44,7 +45,7 @@ router.post('/:guildID/messages', async context => {
         }
     }
 
-    const id = await createMessage(body)
+    const id = await createMessage(guildID, body)
 
     context.body = { id }
 })
