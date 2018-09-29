@@ -1,34 +1,109 @@
-# Kratos
+# Message Recovery
 
-As an exercise in pursuit of further familiarizing myself with some cool technology I took on reworking this project.
-
-## Stack
-- [Docker](https://docker.com)
-- [Kubernetes](https://kubernetes.io)
-- [Minio](https://minio.io)
-- [Node.js](https://nodejs.org)
-- [Postgres](https://www.postgresql.org)
+This service is tasked with providing a solution to storing messages removed on any given Discord guild. That responsibility emcompasses both the initial ingestion of messages (including any media associated with them) and exposing a method to retrieve those entities.
 
 
-## Components
+## Approach
 
-At the moment the application itself (which is excluding dependencies; such as datastores) is broken into three distinct, though not neccessarily decoupled, components.
+Exposing a HTTP based RESTful formed API to reliably accomplish our goal.  
 
-* gateway
-* discord-bot
-* message-recovery-service
-
-Details on each of these may be viewed within their respective directory.
+We will be using two datastores to back the service:
+* Postgres, for metadata
+* Minio object store, for media
 
 
-## Global Kubernetes Secrets
+## Kubernetes Secrets
 
-* `kratos-bugsnag`
-  * `token`
-    * The authorization token
-    * Note: In a different environment it would be a great move to break error reporting into multiple projects. I throw it all at one to save on operating cost.
-* `minio`
-  * `access`
-    * Minio access key (akin to a username)
-  * `secret`
-    * Minio secret key (akin to a password)
+* `message-recovery-service-postgres`
+  * `password`
+    * The password the Postgres instance will use
+
+
+### Endpoints
+
+`GET` `/messages/:guildID`  
+
+#### Parameters:
+* guildID
+  * Type: `Snowflake`
+  * The Discord guild ID
+* limit
+  * Type: `Number`
+  * The maximum amount of entities to fetch
+* before?
+  * Type: `UNIX Epoch Timestamp`
+  * Determine the starting point at which messages are searched for
+
+
+#### Response Body
+```js
+{
+    success: boolean,
+    result: Message[]
+}
+```
+
+  
+`POST` `/messages/:guildID`
+
+#### Parameters:
+* guildID
+  * Type: `Snowflake`
+  * The Discord guild ID
+
+#### Request Body Example
+
+A message with media (either by direct attatchment or address within the content):
+```js
+{
+  content: "hey",
+	discordChannelID: "161283779376316417",
+	discordMessageID: "161283779376316417",
+	sentByDiscordID: "161283779376316417",
+	discordGuildID: "161283779376316417",
+	sentAt: 1534912035,
+	removedAt: 1534912035
+}
+```
+  
+Plain message
+```js
+{
+  content: "hey",
+	discordChannelID: "161283779376316417",
+	discordMessageID: "161283779376316417",
+	sentByDiscordID: "161283779376316417",
+	discordGuildID: "161283779376316417",
+	sentAt: 1534912035,
+	removedAt: 1534912035
+}
+```
+
+We wrap Snowflakes in a string as a number is likely to be truncated.
+
+
+### Models
+
+#### Message
+```js
+{
+  id: 134,
+  discordGuildID: Snowflake,
+  discordChannelID: Snowflake,
+  discordMessageID: Snowflake,
+  sentByDiscordID: Snowflake
+  content: String,
+  sentAt: Timestamp,
+  removedAt: Timestamp,
+}
+```
+
+#### MessageMedia
+```js
+{
+  id: Number,
+  fileName: String,
+  fileType: String,
+  uploadIndex: Number
+}
+```
