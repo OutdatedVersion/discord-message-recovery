@@ -1,8 +1,9 @@
 import { Message } from 'discord.js'
 import discordClient from '../discord'
-import { Command, hasCommand } from '../command'
-import { saveRemovedMessage, RemovedMessagePayload } from './message'
-import { saveMedia } from './media';
+import { Command, hasCommand, registerCommand } from '../command'
+import { saveRemovedMessage, RemovedMessage, fetchMessages } from './message'
+import { saveMedia, fetchMediaBulk } from './media'
+import { createDiscordMessage } from './format'
 
 // listen for removedMessage event
 // use local request thingy to send out stuff
@@ -26,7 +27,7 @@ discordClient.on('messageDelete', async message => {
 
     const guildID = message.guild.id
 
-    const removedMessagePayload: RemovedMessagePayload = {
+    const removedMessagePayload: RemovedMessage = {
         content: cleanContent,
         sentByDiscordID: author.id,
         discordChannelID: channel.id,
@@ -49,7 +50,8 @@ discordClient.on('messageDelete', async message => {
         return
     }
 
-    // save media using ./media.ts service...
+    // If there is media associated with this message, let's save that too...
+
     const media = message.attachments.array()
 
     if (!media.length) {
@@ -65,3 +67,24 @@ discordClient.on('messageDelete', async message => {
         console.error('Encountered issue uploading message media', error.stack)
     }
 })
+
+registerCommand(new Command(
+    ['deleted'],
+    async function run(message: Message, args: string[]) {
+        const guildID = message.guild.id
+        const limit = parseInt(args[0]) || 10
+        
+        const messages = await fetchMessages(guildID, limit)
+        const media = await fetchMediaBulk(guildID, messages.map(message => message.id))
+
+        const discordMessage = await createDiscordMessage(messages, media)
+
+        await message.delete()
+
+        await message.reply(discordMessage, {
+            split: {
+                prepend: 'continued\n'
+            }
+        })
+    }
+))
