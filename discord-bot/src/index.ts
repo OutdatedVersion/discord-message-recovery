@@ -13,6 +13,7 @@ async function start() {
 
     require('./message-recovery')
     require('./command/cleanup')
+    require('./command/information')
 
     discordClient.login(token)
 }
