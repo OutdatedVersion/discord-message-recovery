@@ -1,4 +1,4 @@
-# Discord Bot
+# Gateway
 
 This service exposes the ingresses/service that serve the public facing web side.
 
