@@ -11,7 +11,7 @@ imageName="discord-bot:$version"
 echo "Version: $version"
 
 echo "Building Source"
-yarn build
+yarn -s run build --project tsconfig.prod.json
 
 echo "{\"version\": \"$version\"}" > $VERSION_FILE
 

@@ -65,12 +65,14 @@ export function fetchMessagesByGuild(guildID: string, limit: number = 50, before
 /**
  * Insert a removed message into the datastore.
  * 
+ * @param guildID The ID of the Discord guild being used
  * @param data Input data; it is expected to match a {@class Message}.
  */
-export function createMessage(data: any) {
+export function createMessage(guildID: string, data: any) {
     const repository = getRepository(Message)
     const message = getManager().create(Message, data)
 
+    message.discordGuildID = guildID
     message.removedAt = new Date(data.removedAt * 1000)
     message.sentAt = new Date(data.sentAt * 1000)
 

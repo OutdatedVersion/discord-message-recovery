@@ -1,29 +1,23 @@
 {
-  "name": "@kratos/discord-bot",
+  "name": "discord-bot",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "export NODE_ENV=dev && nodemon -q -w src -x 'babel-node src/index.js'",
-    "build": "babel src -d build",
-    "prod": "export DOCKER_HOST_ADDRESS=$(route -n | awk '/UG[ \t]/{print $2}') && yarn run build && node build/index.js"
-  },
-  "dependencies": {
-    "@kratos/error": "^1.0.2",
-    "@kratos/logging": "^1.0.1",
-    "async-exit-hook": "^2.0.1",
-    "bugsnag": "^2.0.1",
-    "chalk": "^2.1.0",
-    "date-fns": "^1.29.0",
-    "discord.js": "^11.2.1",
-    "mongoose": "^4.13.5",
-    "pino": "^4.7.2",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "start": "node build/index.js",
+    "build": "tsc"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-remove-comments": "^2.0.0",
-    "babel-preset-env": "^1.6.1",
-    "nodemon": "^1.18.3"
+    "@types/got": "^8.3.4",
+    "@types/node": "^10.10.3",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "async-exit-hook": "^2.0.1",
+    "date-fns": "^1.29.0",
+    "discord.js": "^11.4.2",
+    "got": "^9.2.2"
   }
 }

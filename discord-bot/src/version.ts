@@ -1,8 +1,8 @@
-let version
+let version: string
 
 try {
     // Running in a container this will be present
-    version = require('./version.json').version
+    version = 'git' + require('./version.json').version
 }
 catch (ignored) {
     // Probably running locally

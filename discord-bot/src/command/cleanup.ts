@@ -1,7 +1,7 @@
-import { Command } from '.'
+import { registerCommand, Command } from '.'
 
-export default new Command(
-    'cleanup',
+registerCommand(new Command(
+    ['cleanup'],
     async (message, args) => {
         const limit = parseInt(args[0])
 
@@ -17,4 +17,4 @@ export default new Command(
 
         message.reply(`cleaned up ${limit} messages`)
     }
-)
+))
