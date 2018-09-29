@@ -1,9 +1,0 @@
-{
-  "name": "@kratos/routing",
-  "version": "1.0.1",
-  "main": "build/index.js",
-  "dependencies": {},
-  "devDependencies": {
-    "boom": "^7.2.0"
-  }
-}
