@@ -12,6 +12,7 @@ async function start() {
     listenForCommands()
 
     require('./message-recovery')
+    require('./command/cleanup')
 
     discordClient.login(token)
 }
