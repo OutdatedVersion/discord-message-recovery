@@ -22,7 +22,7 @@ type UploadResult = {
 /**
  * The name of the storage bucket in which media will be stored. 
  */
-const BUCKET_NAME = 'removed-message-media'
+const BUCKET_NAME = 'message-recovery-media'
 
 /**
  * Retrieve all media associated with the provided message.
