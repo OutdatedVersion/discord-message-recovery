@@ -16,7 +16,7 @@ yarn -s run build --project tsconfig.prod.json
 echo "{\"version\": \"$version\"}" > $VERSION_FILE
 
 echo "Building Image"
-sudo docker build -t $REGISTRY_URL/$imageName .
-sudo docker push $REGISTRY_URL/$imageName
+docker build -t $REGISTRY_URL/$imageName .
+docker push $REGISTRY_URL/$imageName
 
 echo "Pushed $imageName to $REGISTRY_URL"
