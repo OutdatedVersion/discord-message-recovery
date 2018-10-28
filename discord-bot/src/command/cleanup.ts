@@ -15,6 +15,6 @@ registerCommand(new Command(
         const messages = await channel.fetchMessages({ limit })
         const deleted = await channel.bulkDelete(messages)
 
-        message.reply(`cleaned up ${limit} messages`)
+        message.reply(`cleaned up ${limit} message${limit === 1 ? '' : 's'}`)
     }
 ))
