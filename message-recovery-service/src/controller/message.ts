@@ -1,6 +1,5 @@
 import Router from 'koa-router'
 import { fetchMessagesByGuild, createMessage } from '../service/message'
-import { attatchMediaToMessage, fetchMedia } from '../service/media'
 import { BadRequest } from 'http-errors'
 
 const MESSAGE_POST_REQUIRED_KEYS = ['discordChannelID', 'discordMessageID', 'sentByDiscordID', 'content', 'sentAt', 'removedAt']
@@ -29,9 +28,7 @@ router.get('/:guildID/messages', async context => {
         throw new BadRequest(`Malformed query parameter: 'before' should be UNIX time`)
     }
 
-    const messages = await fetchMessagesByGuild(guildID, limit, before)
-
-    context.body = messages
+    context.body = await fetchMessagesByGuild(guildID, limit, before)
 })
 
 router.post('/:guildID/messages', async context => {
@@ -48,38 +45,6 @@ router.post('/:guildID/messages', async context => {
     const id = await createMessage(guildID, body)
 
     context.body = { id }
-})
-
-// Sub-resource: media
-router.use('/:guildID/messages/:messageID/*', async (context, next) => {
-    const { messageID } = context.params
-
-    if (!messageID.match(/\d/g)) {
-        context.throw(400, 'Invalid messageID parameter')
-    }
-
-    await next()
-})
-
-router.get('/:guildID/messages/:messageID/media', async context => {
-    const { messageID } = context.params
-
-    const result = await fetchMedia(messageID)
-
-    context.body = result
-})
-
-router.post('/:guildID/messages/:id/media', async context => {
-    const { messageID } = context.params
-    const body = <any> context.request.body
-
-    if (!body.media || !body.media.length) {
-        context.throw(400, 'Malformed body; Missing/empty member: media')
-    }
-    
-    const result = await attatchMediaToMessage(messageID, body.media)
-
-    context.body = result
 })
 
 export default router
